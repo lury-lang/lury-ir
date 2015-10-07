@@ -45,7 +45,7 @@ namespace Lury.Compiling.IR
 
         #region -- Constructors --
 
-        public Instruction(string destination, Operation operation, IReadOnlyList<Parameter> parameters)
+        public Instruction(string destination, Operation operation, params Parameter[] parameters)
         {
             if (!Enum.IsDefined(typeof(Operation), operation))
                 throw new ArgumentOutOfRangeException("operation");
@@ -60,7 +60,7 @@ namespace Lury.Compiling.IR
         {
         }
 
-        public Instruction(Operation operation, IReadOnlyList<Parameter> parameters)
+        public Instruction(Operation operation, params Parameter[] parameters)
             : this(null, operation, parameters)
         {
         }
