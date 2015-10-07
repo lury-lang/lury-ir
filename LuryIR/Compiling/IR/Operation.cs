@@ -32,6 +32,9 @@ namespace Lury.Compiling.IR
     {
         Nop,
 
+        Load,
+        Store,
+
         Inc,
         Dec,
         Pos,
@@ -43,7 +46,7 @@ namespace Lury.Compiling.IR
         Mul,
         Div,
         Idiv,
-        Rem,
+        Mod,
 
         Add,
         Sub,
@@ -86,7 +89,6 @@ namespace Lury.Compiling.IR
 
         Func,
         Class,
-        Intfc,
         Annot,
     }
 }
