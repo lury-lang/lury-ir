@@ -41,7 +41,7 @@ namespace Lury.Compiling.IR
 
         #region -- Public Properties --
 
-        public string Destination { get; private set; }
+        public int Destination { get; private set; }
 
         public Operation Operation { get; private set; }
 
@@ -51,7 +51,7 @@ namespace Lury.Compiling.IR
 
         #region -- Constructors --
 
-        public Instruction(string destination, Operation operation, params Parameter[] parameters)
+        public Instruction(int destination, Operation operation, params Parameter[] parameters)
         {
             if (!Enum.IsDefined(typeof(Operation), operation))
                 throw new ArgumentOutOfRangeException("operation");
@@ -61,18 +61,18 @@ namespace Lury.Compiling.IR
             this.Parameters = parameters ?? new Parameter[0];
         }
 
-        public Instruction(string destination, Operation operation)
+        public Instruction(int destination, Operation operation)
             : this(destination, operation, null)
         {
         }
 
         public Instruction(Operation operation, params Parameter[] parameters)
-            : this(null, operation, parameters)
+            : this(NoAssign, operation, parameters)
         {
         }
 
         public Instruction(Operation operation)
-            : this(null, operation, null)
+            : this(NoAssign, operation, null)
         {
         }
 
