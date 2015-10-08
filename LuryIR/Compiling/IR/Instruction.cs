@@ -33,6 +33,12 @@ namespace Lury.Compiling.IR
 {
     public class Instruction
     {
+        #region -- Public Fields --
+
+        public const int NoAssign = -1;
+
+        #endregion
+
         #region -- Public Properties --
 
         public string Destination { get; private set; }
