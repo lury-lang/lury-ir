@@ -26,12 +26,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Numerics;
 
 namespace Lury.Compiling.IR
 {
     public class Parameter
     {
+        #region -- Public Fields --
+
+        public readonly static Parameter Nil = new Parameter(null, ParameterType.Nil);
+
+        public readonly static Parameter True = new Parameter(true, ParameterType.Boolean);
+
+        public readonly static Parameter False = new Parameter(false, ParameterType.Boolean);
+
+        #endregion
+
         #region -- Public Properties --
 
         public object Value { get; private set; }
@@ -52,11 +63,6 @@ namespace Lury.Compiling.IR
 
         #region -- Public Static Methods --
 
-        public static Parameter Nil()
-        {
-            return new Parameter(null, ParameterType.Nil);
-        }
-
         public static Parameter Integer(long value)
         {
             return new Parameter(value, ParameterType.Integer);
@@ -72,9 +78,9 @@ namespace Lury.Compiling.IR
             return new Parameter(new Complex(re, im), ParameterType.Complex);
         }
 
-        public static Parameter Boolean(bool value)
+        public static Parameter GetBoolean(bool value)
         {
-            return new Parameter(value, ParameterType.Boolean);
+            return value ? True : False;
         }
 
         public static Parameter String(string value)
