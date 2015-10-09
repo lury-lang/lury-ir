@@ -35,6 +35,9 @@ namespace Lury.Compiling.IR
         Load,
         Store,
 
+        Scope,
+        Break,
+
         Inc,
         Dec,
         Pos,
