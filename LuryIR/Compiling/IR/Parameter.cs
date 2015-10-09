@@ -63,17 +63,17 @@ namespace Lury.Compiling.IR
 
         #region -- Public Static Methods --
 
-        public static Parameter Integer(long value)
+        public static Parameter GetInteger(long value)
         {
             return new Parameter(value, ParameterType.Integer);
         }
 
-        public static Parameter Real(double value)
+        public static Parameter GetReal(double value)
         {
             return new Parameter(value, ParameterType.Real);
         }
 
-        public static Parameter Complex(double re, double im)
+        public static Parameter GetComplex(double re, double im)
         {
             return new Parameter(new Complex(re, im), ParameterType.Complex);
         }
@@ -83,13 +83,19 @@ namespace Lury.Compiling.IR
             return value ? True : False;
         }
 
-        public static Parameter String(string value)
+        public static Parameter GetString(string value)
         {
+            if (value == null)
+                throw new ArgumentNullException("value");
+
             return new Parameter(value, ParameterType.String);
         }
 
-        public static Parameter Reference(string value)
+        public static Parameter GetReference(Reference value)
         {
+            if (value == null)
+                throw new ArgumentNullException("value");
+
             return new Parameter(value, ParameterType.Reference);
         }
 
