@@ -28,9 +28,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Lury.Compiling.Utils;
 
 namespace Lury.Compiling.IR
@@ -39,10 +36,10 @@ namespace Lury.Compiling.IR
     {
         #region -- Private Fields --
 
-        private readonly IList<Routine> children;
-        private readonly IList<Instruction> instructions;
-        private readonly IDictionary<string, int> jumpLabels;
-        private readonly IDictionary<int, CodePosition> codePosition;
+        private readonly IReadOnlyList<Routine> children;
+        private readonly IReadOnlyList<Instruction> instructions;
+        private readonly IReadOnlyDictionary<string, int> jumpLabels;
+        private readonly IReadOnlyDictionary<int, CodePosition> codePosition;
 
         #endregion
 
@@ -50,13 +47,14 @@ namespace Lury.Compiling.IR
 
         public string Name { get; private set; }
 
-        public IReadOnlyList<Routine> Children { get { return (IReadOnlyList<Routine>)this.children; } }
 
-        public IReadOnlyList<Instruction> Instructions { get { return (IReadOnlyList<Instruction>)this.instructions; } }
+        public IReadOnlyList<Routine> Children { get { return this.children; } }
 
-        public IReadOnlyDictionary<string, int> JumpLabels { get { return (IReadOnlyDictionary<string, int>)this.jumpLabels; } }
+        public IReadOnlyList<Instruction> Instructions { get { return this.instructions; } }
 
-        public IReadOnlyDictionary<int, CodePosition> CodePosition { get { return (IReadOnlyDictionary<int, CodePosition>)this.codePosition; } }
+        public IReadOnlyDictionary<string, int> JumpLabels { get { return this.jumpLabels; } }
+
+        public IReadOnlyDictionary<int, CodePosition> CodePosition { get { return this.codePosition; } }
 
         #endregion
 
@@ -72,14 +70,15 @@ namespace Lury.Compiling.IR
                 throw new ArgumentNullException("name");
 
             this.Name = name;
-            this.children = children ?? new Routine[0];
-            this.instructions = instructions ?? new Instruction[0];
-            this.jumpLabels = jumpLabels ?? new Dictionary<string, int>();
+            this.children = (IReadOnlyList<Routine>)children ?? new Routine[0];
+            this.instructions = (IReadOnlyList<Instruction>)instructions ?? new Instruction[0];
+            this.jumpLabels = (IReadOnlyDictionary<string, int>)jumpLabels ?? new Dictionary<string, int>();
 
             this.codePosition =
+                (IReadOnlyDictionary<int, CodePosition>)(
                 (codePosition == null) ? new SortedDictionary<int, CodePosition>() :
                 (codePosition is SortedDictionary<int, CodePosition>) ? codePosition :
-                new SortedDictionary<int, CodePosition>(codePosition);
+                new SortedDictionary<int, CodePosition>(codePosition));
         }
 
         public Routine(string name)
