@@ -99,6 +99,14 @@ namespace Lury.Compiling.IR
             return new Parameter(value, ParameterType.Reference);
         }
 
+        public static Parameter GetLabel(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentNullException("value");
+
+            return new Parameter(value, ParameterType.Label);
+        }
+
         #endregion
     }
 
@@ -111,5 +119,6 @@ namespace Lury.Compiling.IR
         Boolean,
         String,
         Reference,
+        Label,
     }
 }
