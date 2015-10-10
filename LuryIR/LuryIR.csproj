@@ -37,6 +37,7 @@
     <Compile Include="Compiling\IR\Operation.cs" />
     <Compile Include="Compiling\IR\Instruction.cs" />
     <Compile Include="Compiling\IR\Parameter.cs" />
+    <Compile Include="Compiling\IR\Reference.cs" />
     <Compile Include="Compiling\IR\Routine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
