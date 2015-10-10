@@ -47,6 +47,7 @@ namespace Lury.Compiling.IR
 
         public string Name { get; private set; }
 
+        public int AllocSize { get; private set; }
 
         public IReadOnlyList<Routine> Children { get { return this.children; } }
 
@@ -61,6 +62,7 @@ namespace Lury.Compiling.IR
         #region -- Constructors --
 
         public Routine(string name,
+                       int allocSize,
                        IList<Routine> children,
                        IList<Instruction> instructions,
                        IDictionary<string, int> jumpLabels,
@@ -69,7 +71,11 @@ namespace Lury.Compiling.IR
             if (name == null)
                 throw new ArgumentNullException("name");
 
+            if (allocSize < 0)
+                throw new ArgumentOutOfRangeException("allocSize");
+            
             this.Name = name;
+            this.AllocSize = allocSize;
             this.children = (IReadOnlyList<Routine>)children ?? new Routine[0];
             this.instructions = (IReadOnlyList<Instruction>)instructions ?? new Instruction[0];
             this.jumpLabels = (IReadOnlyDictionary<string, int>)jumpLabels ?? new Dictionary<string, int>();
@@ -82,7 +88,7 @@ namespace Lury.Compiling.IR
         }
 
         public Routine(string name)
-            : this(name, null, null, null, null)
+            : this(name, 0, null, null, null, null)
         {
         }
 
