@@ -29,29 +29,51 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lury.Compiling.IR
 {
+    /// <summary>
+    /// 参照パラメータに必要な値をカプセル化したクラスです。
+    /// </summary>
     public class Reference
     {
         #region -- Public Properties --
 
+        /// <summary>
+        /// このオブジェクトはレジスタへの参照を表すかの真偽値を取得します。
+        /// </summary>
         public bool IsRegister { get; private set; }
 
+        /// <summary>
+        /// 参照するレジスタの番号を表す数値を取得します。
+        /// </summary>
         public int Register { get; private set; }
 
+        /// <summary>
+        /// 参照する変数の名前を表す文字列を取得します。
+        /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// 次の参照となる子の変数名の階層リストを取得します。
+        /// </summary>
         public IReadOnlyList<string> Children { get; private set; }
 
+        /// <summary>
+        /// 次の参照となる子の参照を持つかの真偽値を取得します。
+        /// </summary>
         public bool HasChildren { get; private set; }
 
         #endregion
 
         #region -- Constructors --
 
+        /// <summary>
+        /// レジスタ番号と子参照の配列を指定して
+        /// 新しい <see cref="Lury.Compiling.IR.Reference"/> クラスのインスタンスを初期化します。
+        /// </summary>
+        /// <param name="register">参照されるレジスタ番号。</param>
+        /// <param name="children">子として参照される変数名の配列。</param>
         public Reference(int register, params string[] children)
         {
             if (register < 0)
@@ -70,6 +92,12 @@ namespace Lury.Compiling.IR
             this.HasChildren = (children.Length > 0);
         }
 
+        /// <summary>
+        /// 変数名と子参照の配列を指定して
+        /// 新しい <see cref="Lury.Compiling.IR.Reference"/> クラスのインスタンスを初期化します。
+        /// </summary>
+        /// <param name="name">参照される変数名。</param>
+        /// <param name="children">子として参照される変数名の配列。</param>
         public Reference(string name, params string[] children)
         {
             if (string.IsNullOrEmpty(name))
