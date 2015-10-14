@@ -78,7 +78,7 @@ namespace Lury.Compiling.IR
             this.children = new List<Routine>();
             this.instructions = new List<Instruction>();
             this.jumpLabels = new Dictionary<string, int>();
-            this.codePosition = new SortedDictionary<int, CodePosition>(codePosition);
+            this.codePosition = new SortedDictionary<int, CodePosition>();
         }
 
         #endregion
