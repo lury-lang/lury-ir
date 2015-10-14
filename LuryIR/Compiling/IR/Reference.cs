@@ -74,7 +74,7 @@ namespace Lury.Compiling.IR
         /// </summary>
         /// <param name="register">参照されるレジスタ番号。</param>
         /// <param name="children">子として参照される変数名の配列。</param>
-        public Reference(int register, params string[] children)
+        internal Reference(int register, params string[] children)
         {
             if (register < 0)
                 throw new ArgumentOutOfRangeException("register");
@@ -98,7 +98,7 @@ namespace Lury.Compiling.IR
         /// </summary>
         /// <param name="name">参照される変数名。</param>
         /// <param name="children">子として参照される変数名の配列。</param>
-        public Reference(string name, params string[] children)
+        internal Reference(string name, params string[] children)
         {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentOutOfRangeException("name");
