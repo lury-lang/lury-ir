@@ -57,6 +57,8 @@ namespace Lury.Compiling.IR
 
         public string Name { get; private set; }
 
+        public string SourceName { get; private set; }
+
         public IList<Routine> Children { get { return this.children; } }
 
         public IList<Instruction> Instructions { get { return this.instructions; } }
@@ -69,12 +71,16 @@ namespace Lury.Compiling.IR
 
         #region -- Constructors --
 
-        public RoutineBuilder(string name)
+        public RoutineBuilder(string name, string sourceName)
         {
             if (name == null)
                 throw new ArgumentNullException("name");
 
+            if (sourceName == null)
+                throw new ArgumentNullException("sourceName");
+
             this.Name = name;
+            this.SourceName = sourceName;
             this.children = new List<Routine>();
             this.instructions = new List<Instruction>();
             this.jumpLabels = new Dictionary<string, int>();
