@@ -28,6 +28,7 @@
 
 using System;
 using System.Numerics;
+using System.Text;
 
 namespace Lury.Compiling.IR
 {
@@ -57,6 +58,27 @@ namespace Lury.Compiling.IR
         {
             this.Value = value;
             this.Type = type;
+        }
+
+        #endregion
+
+        #region -- Public Methods --
+
+        public override string ToString()
+        {
+            switch (this.Type)
+            {
+                case ParameterType.Nil: return "nil";
+                case ParameterType.Integer: return "int(" + this.Value + ")";
+                case ParameterType.Real: return "real(" + this.Value + ")";
+                case ParameterType.Complex: return "complex" + this.Value;
+                case ParameterType.Boolean: return ((bool)this.Value ? "bool(true)" : "bool(false)");
+                case ParameterType.String: return "string(\"" + ConvertEscapeSequence((string)this.Value) + "\")";
+                case ParameterType.Reference: return this.Value.ToString();
+                case ParameterType.Label: return "::" + this.Value;
+                default:
+                    return "(unknown parameter)";
+            }
         }
 
         #endregion
@@ -105,6 +127,27 @@ namespace Lury.Compiling.IR
                 throw new ArgumentNullException("value");
 
             return new Parameter(value, ParameterType.Label);
+        }
+
+        #endregion
+
+        #region -- Private Static Methods --
+
+        private static string ConvertEscapeSequence(string input)
+        {
+            return new StringBuilder(input, input.Length * 2)
+                .Replace("\\", "\\\\")
+                .Replace("\r", "\\r")
+                .Replace("\n", "\\n")
+                .Replace("\t", "\\t")
+                .Replace("\'", "\\'")
+                .Replace("\"", "\\\"")
+                .Replace("\0", "\\0")
+                .Replace("\a", "\\a")
+                .Replace("\b", "\\b")
+                .Replace("\f", "\\f")
+                .Replace("\v", "\\v")
+                .ToString();
         }
 
         #endregion
