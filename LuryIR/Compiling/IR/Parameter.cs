@@ -113,12 +113,14 @@ namespace Lury.Compiling.IR
             return new Parameter(value, ParameterType.String);
         }
 
-        public static Parameter GetReference(Reference value)
+        public static Parameter GetReference(int register, params string[] children)
         {
-            if (value == null)
-                throw new ArgumentNullException("value");
+            return new Parameter(new Reference(register, children), ParameterType.Reference);
+        }
 
-            return new Parameter(value, ParameterType.Reference);
+        public static Parameter GetReference(string name, params string[] children)
+        {
+            return new Parameter(new Reference(name, children), ParameterType.Reference);
         }
 
         public static Parameter GetLabel(string value)
