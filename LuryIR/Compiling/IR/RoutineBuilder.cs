@@ -663,7 +663,13 @@ namespace Lury.Compiling.IR
 
         public Routine Build()
         {
-            throw new NotImplementedException();
+            return new Routine(
+                this.Name,
+                this.registerCount,
+                this.children,
+                this.instructions,
+                this.jumpLabels,
+                this.codePosition);
         }
 
         public string GetLabelName(string name)
