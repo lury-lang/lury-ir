@@ -666,6 +666,57 @@ namespace Lury.Compiling.IR
             throw new NotImplementedException();
         }
 
+        public string GetLabelName(string name)
+        {
+            if (!this.jumpLabels.ContainsKey(name))
+                return name;
+
+            int i = 0;
+            string res;
+
+            while (this.jumpLabels.ContainsKey(res = name + i.ToString()))
+                i++;
+
+            return res;
+        }
+
+        public void SetLabelAtCurrent(string name)
+        {
+            this.jumpLabels.Add(name, this.instructions.Count);
+        }
+
+        public void SetRoutinePosition(int line, int column, int length = 0)
+        {
+            if (line < 1)
+                throw new ArgumentOutOfRangeException("line");
+
+            if (column < 1)
+                throw new ArgumentOutOfRangeException("column");
+            
+            if (length < 0)
+                throw new ArgumentOutOfRangeException("length");
+
+            this.codePosition.Add(
+                -1,
+                new Utils.CodePosition(this.SourceName, new CharPosition(line, column), length));
+        }
+
+        public void SetPositionAtCurrent(int line, int column, int length = 0)
+        {
+            if (line < 1)
+                throw new ArgumentOutOfRangeException("line");
+
+            if (column < 1)
+                throw new ArgumentOutOfRangeException("column");
+
+            if (length < 0)
+                throw new ArgumentOutOfRangeException("length");
+
+            this.codePosition.Add(
+                this.instructions.Count - 1,
+                new Utils.CodePosition(this.SourceName, new CharPosition(line, column), length));
+        }
+
         #endregion
 
         #region -- Private Methods --
