@@ -117,7 +117,7 @@ namespace Lury.Compiling.IR
             if (dest < 0)
                 throw new ArgumentOutOfRangeException("dest");
             
-            this.instructions.Add(new Instruction(Operation.Store, Parameter.GetReference(new Reference(dest)), x));
+            this.instructions.Add(new Instruction(Operation.Store, Parameter.GetReference(dest), x));
         }
 
         public void BeginScope()
