@@ -155,15 +155,49 @@ namespace Lury.Compiling.IR
         #endregion
     }
 
+    /// <summary>
+    /// パラメータの種類を表す列挙体です。
+    /// </summary>
     public enum ParameterType
     {
+        /// <summary>
+        /// nil。
+        /// </summary>
         Nil,
+
+        /// <summary>
+        /// 整数値。
+        /// </summary>
         Integer,
+
+        /// <summary>
+        /// 実数値。
+        /// </summary>
         Real,
+
+        /// <summary>
+        /// 複素数値。
+        /// </summary>
         Complex,
+
+        /// <summary>
+        /// 真偽値。
+        /// </summary>
         Boolean,
+
+        /// <summary>
+        /// 文字列。
+        /// </summary>
         String,
+
+        /// <summary>
+        /// 変数またはレジスタへの参照。
+        /// </summary>
         Reference,
+
+        /// <summary>
+        /// ラベル。
+        /// </summary>
         Label,
     }
 }
