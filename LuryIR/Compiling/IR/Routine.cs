@@ -34,6 +34,9 @@ using Lury.Compiling.Utils;
 
 namespace Lury.Compiling.IR
 {
+    /// <summary>
+    /// 単一の手続きを表現するためのクラスです。
+    /// </summary>
     public class Routine
     {
         #region -- Private Fields --
@@ -47,22 +50,52 @@ namespace Lury.Compiling.IR
 
         #region -- Public Properties --
 
+        /// <summary>
+        /// このルーチンに与えられた名前を取得します。
+        /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// ルーチンの実行時に必要なレジスタの個数を取得します。
+        /// </summary>
         public int RegisterCount { get; private set; }
 
+        /// <summary>
+        /// 子となるルーチンの読み取り専用のリストを取得します。
+        /// </summary>
         public IReadOnlyList<Routine> Children { get { return this.children; } }
 
+        /// <summary>
+        /// 記述された命令列の読み取り専用のリストを取得します。
+        /// </summary>
         public IReadOnlyList<Instruction> Instructions { get { return this.instructions; } }
 
+        /// <summary>
+        /// 配置されたジャンプ操作のためのラベルの一覧の読み取り専用のディクショナリを取得します。
+        /// </summary>
         public IReadOnlyDictionary<string, int> JumpLabels { get { return this.jumpLabels; } }
 
+        /// <summary>
+        /// 命令列に対応したソースコード上の位置の読み取り専用のディクショナリを取得します。
+        /// </summary>
         public IReadOnlyDictionary<int, CodePosition> CodePosition { get { return this.codePosition; } }
 
         #endregion
 
         #region -- Constructors --
 
+        /// <summary>
+        /// 各パラメータを指定して新しい <see cref="Lury.Compiling.IR.Routine"/> クラスのインスタンスを初期化します。
+        /// </summary>
+        /// <param name="name">ルーチンの名前を表す、null でない名前。</param>
+        /// <param name="registerNumber">実行に必要なレジスタの個数。</param>
+        /// <param name="children">子ルーチンとなる <see cref="Lury.Compiling.IR.Routine"/> のリスト。</param>
+        /// <param name="instructions">命令列を格納した <see cref="Lury.Compiling.IR.Instruction"/> のリスト。</param>
+        /// <param name="jumpLabels">ジャンプ位置を格納した、文字列と命令インデクスをペアとするディクショナリ。</param>
+        /// <param name="codePosition">
+        /// コード位置を格納した、命令インデクスと
+        /// <see cref="Lury.Compiling.Utils.CodePosition"/> オブジェクトをペアとするディクショナリ。
+        /// </param>
         public Routine(string name,
                        int registerCount,
                        IList<Routine> children,
@@ -89,6 +122,10 @@ namespace Lury.Compiling.IR
                 new SortedDictionary<int, CodePosition>(codePosition));
         }
 
+        /// <summary>
+        /// ルーチン名を指定して新しい <see cref="Lury.Compiling.IR.Routine"/> クラスのインスタンスを初期化します。
+        /// </summary>
+        /// <param name="name">ルーチンの名前を表す、null でない名前。</param>
         public Routine(string name)
             : this(name, 0, null, null, null, null)
         {
@@ -98,6 +135,10 @@ namespace Lury.Compiling.IR
 
         #region -- Public Methods --
 
+        /// <summary>
+        /// ルーチンに格納された命令列を可読な文字列として出力します。
+        /// </summary>
+        /// <returns>ルーチンの命令列の可読な文字列。</returns>
         public string Dump()
         {
             StringBuilder sb = new StringBuilder();
