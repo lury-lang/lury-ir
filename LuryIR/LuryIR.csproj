@@ -40,6 +40,7 @@
     <Compile Include="Compiling\IR\Reference.cs" />
     <Compile Include="Compiling\IR\RoutineBuilder.cs" />
     <Compile Include="Compiling\IR\Routine.cs" />
+    <Compile Include="Compiling\IR\RoutineVerifier.cs" />
     <Compile Include="Compiling\IR\VerifyOutputType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
