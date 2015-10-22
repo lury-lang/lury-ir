@@ -34,6 +34,7 @@ namespace Lury.Compiling.IR
         InstructionsHasNull,
 
         RegisterNotEnough,
+        IllegalParameterCount,
     }
 
     public enum VerifyWarn

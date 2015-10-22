@@ -67,6 +67,7 @@ namespace Lury.Compiling.IR
             this.CheckNullList(this.TargetRoutine);
             this.CheckRegisterCount(this.TargetRoutine);
             this.CheckUnusedRegister(this.TargetRoutine);
+            this.CheckParameterCount(this.TargetRoutine);
 
             return !this.Logger.ErrorOutputs.Any();
         }
@@ -122,6 +123,94 @@ namespace Lury.Compiling.IR
 
             foreach (var child in routine.Children)
                 this.CheckUnusedRegister(child);
+        }
+
+        private void CheckParameterCount(Routine routine)
+        {
+            foreach (var inst in routine.Instructions)
+            {
+                if (!JudgeForParameterCount(inst))
+                    this.Logger.ReportError(VerifyError.IllegalParameterCount, appendix: "at " + routine.Name);
+            }
+
+            foreach (var child in routine.Children)
+                this.CheckParameterCount(child);
+        }
+
+        #endregion
+
+        #region -- Private Static Methods --
+
+        private static bool JudgeForParameterCount(Instruction inst)
+        {
+            switch (inst.Operation)
+            {
+                // 0 params
+                case Operation.Nop:
+                case Operation.Scope:
+                case Operation.Break:
+                case Operation.Ovlok:
+                    return (inst.Parameters.Count == 0);
+
+                // 1 param
+                case Operation.Load:
+                case Operation.Inc:
+                case Operation.Dec:
+                case Operation.Pos:
+                case Operation.Neg:
+                case Operation.Bnot:
+                case Operation.Lnot:
+                case Operation.Throw:
+                case Operation.Eval:
+                case Operation.Jmp:
+                case Operation.Catch:
+                case Operation.Func:
+                    return (inst.Parameters.Count == 1);
+
+                // 2 params
+                case Operation.Store:
+                case Operation.Pow:
+                case Operation.Mul:
+                case Operation.Div:
+                case Operation.Idiv:
+                case Operation.Mod:
+                case Operation.Add:
+                case Operation.Sub:
+                case Operation.Con:
+                case Operation.Shl:
+                case Operation.Shr:
+                case Operation.And:
+                case Operation.Xor:
+                case Operation.Or:
+                case Operation.Lt:
+                case Operation.Gt:
+                case Operation.Ltq:
+                case Operation.Gtq:
+                case Operation.Eq:
+                case Operation.Neq:
+                case Operation.Is:
+                case Operation.Isn:
+                case Operation.Land:
+                case Operation.Lor:
+                case Operation.Jmpt:
+                case Operation.Jmpf:
+                case Operation.Jmpn:
+                case Operation.Annot:
+                    return (inst.Parameters.Count == 2);
+
+                // 0 or 1 params
+                case Operation.Ret:
+                case Operation.Yield:
+                    return (inst.Parameters.Count == 0 || inst.Parameters.Count == 1);
+
+                // 1 or more
+                case Operation.Call:
+                case Operation.Class:
+                    return (inst.Parameters.Count >= 1);
+
+                default:
+                    throw new ArgumentOutOfRangeException("inst");
+            }
         }
 
         #endregion
