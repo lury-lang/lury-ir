@@ -35,6 +35,7 @@ namespace Lury.Compiling.IR
 
         RegisterNotEnough,
         IllegalParameterCount,
+        UndefinedLabelIsReferred,
     }
 
     public enum VerifyWarn

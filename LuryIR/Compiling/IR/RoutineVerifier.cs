@@ -68,6 +68,7 @@ namespace Lury.Compiling.IR
             this.CheckRegisterCount(this.TargetRoutine);
             this.CheckUnusedRegister(this.TargetRoutine);
             this.CheckParameterCount(this.TargetRoutine);
+            this.CheckJumpLabel(this.TargetRoutine);
 
             return !this.Logger.ErrorOutputs.Any();
         }
@@ -135,6 +136,22 @@ namespace Lury.Compiling.IR
 
             foreach (var child in routine.Children)
                 this.CheckParameterCount(child);
+        }
+
+        private void CheckJumpLabel(Routine routine)
+        {
+            var labels = routine.Instructions.SelectMany(i => i.Parameters)
+                                             .Where(p => p.Type == ParameterType.Label)
+                                             .Select(p => p.Value)
+                                             .Cast<string>()
+                                             .Distinct()
+                                             .ToArray();
+
+            if (!labels.All(l => routine.JumpLabels.ContainsKey(l) || routine.Children.Any(r => r.Name == l)))
+                this.Logger.ReportError(VerifyError.UndefinedLabelIsReferred, appendix: "at " + routine.Name);
+
+            foreach (var child in routine.Children)
+                this.CheckJumpLabel(child);
         }
 
         #endregion
