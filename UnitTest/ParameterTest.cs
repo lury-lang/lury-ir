@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Lury.Compiling.IR;
 using Lury.Compiling.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,6 +16,7 @@ namespace UnitTest
         {
             var param = Parameter.Nil;
 
+            Assert.IsNotNull(param);
             Assert.IsNull(param.Value);
             Assert.AreEqual(ParameterType.Nil, param.Type);
         }
@@ -24,9 +27,13 @@ namespace UnitTest
             var trueParam = Parameter.True;
             var falseParam = Parameter.False;
 
+            Assert.IsNotNull(trueParam);
+            Assert.IsInstanceOfType(trueParam.Value, typeof(bool));
             Assert.IsTrue((bool)trueParam.Value);
             Assert.AreEqual(ParameterType.Boolean, trueParam.Type);
 
+            Assert.IsNotNull(falseParam);
+            Assert.IsInstanceOfType(falseParam.Value, typeof(bool));
             Assert.IsFalse((bool)falseParam.Value);
             Assert.AreEqual(ParameterType.Boolean, falseParam.Type);
         }
