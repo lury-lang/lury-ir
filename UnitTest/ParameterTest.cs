@@ -184,5 +184,20 @@ namespace UnitTest
         {
             Parameter.GetLabel(string.Empty);
         }
+
+        [TestMethod]
+        public void ToStringTest()
+        {
+            Assert.AreEqual("nil", Parameter.Nil.ToString());
+            Assert.AreEqual("int(42)", Parameter.GetInteger(42).ToString());
+            Assert.AreEqual("real(3.5)", Parameter.GetReal(3.5).ToString());
+            Assert.AreEqual("complex(3.5, -4.2)", Parameter.GetComplex(3.5, -4.2).ToString());
+            Assert.AreEqual("bool(true)", Parameter.True.ToString());
+            Assert.AreEqual("bool(false)", Parameter.False.ToString());
+            Assert.AreEqual("string(\"test\\r\\nstring\")", Parameter.GetString("test\r\nstring").ToString());
+            Assert.AreEqual("%0.foo.bar", Parameter.GetReference(0, "foo", "bar").ToString());
+            Assert.AreEqual("*hoge.foo.bar", Parameter.GetReference("hoge", "foo", "bar").ToString());
+            Assert.AreEqual("::test_label", Parameter.GetLabel("test_label").ToString());
+        }
     }
 }
