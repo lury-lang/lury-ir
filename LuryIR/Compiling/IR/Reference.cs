@@ -122,23 +122,13 @@ namespace Lury.Compiling.IR
 
         public override string ToString()
         {
-            if (this.IsRegister)
-            {
                 return string.Format(
-                    "%{0}{1}{2}",
-                    this.Register,
+                    "{0}{1}{2}{3}",
+                    this.IsRegister ? '%' : '*',
+                    this.IsRegister ? this.Register.ToString() : this.Name,
                     this.HasChildren ? "." : "",
                     string.Join(".", this.Children));
             }
-            else
-            {
-                return string.Format(
-                    "*{0}{1}{2}",
-                    this.Name,
-                    this.HasChildren ? "." : "",
-                    string.Join(".", this.Children));
-            }
-        }
 
         #endregion
     }
