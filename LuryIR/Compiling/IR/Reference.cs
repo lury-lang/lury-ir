@@ -35,18 +35,25 @@ namespace Lury.Compiling.IR
     /// <summary>
     /// 参照パラメータに必要な値をカプセル化したクラスです。
     /// </summary>
+    /// <remarks>
+    /// <see cref="Reference"/> クラスはインストラクションの実行に必要なパラメータの一つの値として振る舞います。
+    /// レジスタや変数などのオブジェクトに対する参照を表し、さらにそのオブジェクトが持つ属性への参照も同時に表します。
+    /// 後者を子参照とここでは呼びます。レジスタの番号は 0 以上の整数値を持ち、参照や子参照の名前は 1 文字以上の文字列です。
+    /// </remarks>
     public class Reference
     {
         #region -- Public Properties --
 
         /// <summary>
-        /// このオブジェクトはレジスタへの参照を表すかの真偽値を取得します。
+        /// この <see cref="Reference"/> オブジェクトがレジスタへの参照を表しているかの真偽値を取得します。
         /// </summary>
+        /// <value>レジスタへの参照を表すとき true、それ以外のとき false。</value>
         public bool IsRegister { get; private set; }
 
         /// <summary>
         /// 参照するレジスタの番号を表す数値を取得します。
         /// </summary>
+        /// <value>レジスタ番号を表す 0 以上の <see cref="System.Int32"/> 型の値。</value>
         public int Register { get; private set; }
 
         /// <summary>
@@ -120,15 +127,19 @@ namespace Lury.Compiling.IR
 
         #region -- Public Methods --
 
+        /// <summary>
+        /// このインスタンスの状態を表す文字列を取得します。
+        /// </summary>
+        /// <returns>このインスタンスの状態を表す、レジスタ番号または変数名と子参照が含まれる文字列。</returns>
         public override string ToString()
         {
-                return string.Format(
+            return string.Format(
                     "{0}{1}{2}{3}",
                     this.IsRegister ? '%' : '*',
                     this.IsRegister ? this.Register.ToString() : this.Name,
                     this.HasChildren ? "." : "",
                     string.Join(".", this.Children));
-            }
+        }
 
         #endregion
     }
