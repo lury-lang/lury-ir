@@ -29,6 +29,7 @@
 using System;
 using System.Numerics;
 using System.Text;
+using Lury.Compiling.Utils;
 
 namespace Lury.Compiling.IR
 {
@@ -95,11 +96,11 @@ namespace Lury.Compiling.IR
                 case ParameterType.Real: return "real(" + this.Value + ")";
                 case ParameterType.Complex: return "complex" + this.Value;
                 case ParameterType.Boolean: return ((bool)this.Value ? "bool(true)" : "bool(false)");
-                case ParameterType.String: return "string(\"" + ConvertEscapeSequence((string)this.Value) + "\")";
+                case ParameterType.String: return "string(\"" + ((string)this.Value).ConvertControlChars() + "\")";
                 case ParameterType.Reference: return this.Value.ToString();
                 case ParameterType.Label: return "::" + this.Value;
                 default:
-                    return "(unknown parameter)";
+                    return "(invalid parameter)";
             }
         }
 
@@ -194,27 +195,6 @@ namespace Lury.Compiling.IR
                 throw new ArgumentNullException("value");
 
             return new Parameter(value, ParameterType.Label);
-        }
-
-        #endregion
-
-        #region -- Private Static Methods --
-
-        private static string ConvertEscapeSequence(string input)
-        {
-            return new StringBuilder(input, input.Length * 2)
-                .Replace("\\", "\\\\")
-                .Replace("\r", "\\r")
-                .Replace("\n", "\\n")
-                .Replace("\t", "\\t")
-                .Replace("\'", "\\'")
-                .Replace("\"", "\\\"")
-                .Replace("\0", "\\0")
-                .Replace("\a", "\\a")
-                .Replace("\b", "\\b")
-                .Replace("\f", "\\f")
-                .Replace("\v", "\\v")
-                .ToString();
         }
 
         #endregion
