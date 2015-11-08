@@ -85,12 +85,12 @@ namespace Lury.Compiling.IR
         #region -- Constructors --
 
         /// <summary>
-        /// 各パラメータを指定して新しい <see cref="Lury.Compiling.IR.Routine"/> クラスのインスタンスを初期化します。
+        /// 各パラメータを指定して新しい <see cref="Routine"/> クラスのインスタンスを初期化します。
         /// </summary>
         /// <param name="name">ルーチンの名前を表す、null でない名前。</param>
-        /// <param name="registerNumber">実行に必要なレジスタの個数。</param>
-        /// <param name="children">子ルーチンとなる <see cref="Lury.Compiling.IR.Routine"/> のリスト。</param>
-        /// <param name="instructions">命令列を格納した <see cref="Lury.Compiling.IR.Instruction"/> のリスト。</param>
+        /// <param name="registerCount">実行に必要なレジスタの個数。</param>
+        /// <param name="children">子ルーチンとなる <see cref="Routine"/> のリスト。</param>
+        /// <param name="instructions">命令列を格納した <see cref="Instruction"/> のリスト。</param>
         /// <param name="jumpLabels">ジャンプ位置を格納した、文字列と命令インデクスをペアとするディクショナリ。</param>
         /// <param name="codePosition">
         /// コード位置を格納した、命令インデクスと
@@ -123,7 +123,7 @@ namespace Lury.Compiling.IR
         }
 
         /// <summary>
-        /// ルーチン名を指定して新しい <see cref="Lury.Compiling.IR.Routine"/> クラスのインスタンスを初期化します。
+        /// ルーチン名を指定して新しい <see cref="Routine"/> クラスのインスタンスを初期化します。
         /// </summary>
         /// <param name="name">ルーチンの名前を表す、null でない名前。</param>
         public Routine(string name)
