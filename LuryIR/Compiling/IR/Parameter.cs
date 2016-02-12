@@ -98,6 +98,7 @@ namespace Lury.Compiling.IR
                 case ParameterType.Boolean: return ((bool)this.Value ? "bool(true)" : "bool(false)");
                 case ParameterType.String: return "string(\"" + ((string)this.Value).ConvertControlChars() + "\")";
                 case ParameterType.Reference: return this.Value.ToString();
+                case ParameterType.Register: return "register(" + this.Value + ")";
                 case ParameterType.Label: return "::" + this.Value;
                 default:
                     return "(invalid parameter)";
@@ -155,25 +156,24 @@ namespace Lury.Compiling.IR
         }
 
         /// <summary>
-        /// レジスタ番号と子参照から <see cref="Lury.Compiling.IR.Parameter"/> オブジェクトを生成します。
+        /// 変数名と子参照から <see cref="Lury.Compiling.IR.Parameter"/> オブジェクトを生成します。
         /// </summary>
-        /// <param name="register">パラメータとして渡されるレジスタ番号。</param>
-        /// <param name="children">パラメータとして渡される子参照を表す文字列の配列。</param>
+        /// <param name="name">パラメータとして渡される変数名を表す文字列。</param>
         /// <returns>生成された <see cref="Lury.Compiling.IR.Parameter"/> オブジェクト。</returns>
-        public static Parameter GetReference(int register, params string[] children)
-        {
-            return new Parameter(new Reference(register, children), ParameterType.Reference);
-        }
+        public static Parameter GetReference(string name)
+            => new Parameter(new Reference(name), ParameterType.Reference);
 
         /// <summary>
         /// 変数名と子参照から <see cref="Lury.Compiling.IR.Parameter"/> オブジェクトを生成します。
         /// </summary>
-        /// <param name="name">パラメータとして渡される変数名を表す文字列。</param>
-        /// <param name="children">パラメータとして渡される子参照を表す文字列の配列。</param>
+        /// <param name="name">パラメータとして渡されるレジスタ番号。</param>
         /// <returns>生成された <see cref="Lury.Compiling.IR.Parameter"/> オブジェクト。</returns>
-        public static Parameter GetReference(string name, params string[] children)
+        public static Parameter GetRegister(int value)
         {
-            return new Parameter(new Reference(name, children), ParameterType.Reference);
+            if (value < 0)
+                throw new ArgumentOutOfRangeException(nameof(value));
+
+            return new Parameter(value, ParameterType.Register);
         }
 
         /// <summary>
@@ -228,7 +228,12 @@ namespace Lury.Compiling.IR
         String,
 
         /// <summary>
-        /// 変数またはレジスタへの参照。
+        /// レジスタへの参照。
+        /// </summary>
+        Register,
+
+        /// <summary>
+        /// 変数への参照。
         /// </summary>
         Reference,
 
