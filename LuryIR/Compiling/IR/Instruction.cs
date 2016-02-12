@@ -76,7 +76,7 @@ namespace Lury.Compiling.IR
         public Instruction(int destination, Operation operation, params Parameter[] parameters)
         {
             if (!Enum.IsDefined(typeof(Operation), operation))
-                throw new ArgumentOutOfRangeException("operation");
+                throw new ArgumentOutOfRangeException(nameof(operation));
 
             this.Destination = destination;
             this.Operation = operation;
