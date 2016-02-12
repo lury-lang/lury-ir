@@ -59,13 +59,13 @@ namespace Lury.Compiling.IR
 
         public string SourceName { get; private set; }
 
-        public IList<Routine> Children { get { return this.children; } }
+        public IList<Routine> Children => this.children;
 
-        public IList<Instruction> Instructions { get { return this.instructions; } }
+        public IList<Instruction> Instructions => this.instructions;
 
-        public IDictionary<string, int> JumpLabels { get { return this.jumpLabels; } }
+        public IDictionary<string, int> JumpLabels => this.jumpLabels;
 
-        public IDictionary<int, CodePosition> CodePosition { get { return this.codePosition; } }
+        public IDictionary<int, CodePosition> CodePosition => this.codePosition;
 
         #endregion
 
@@ -74,10 +74,10 @@ namespace Lury.Compiling.IR
         public RoutineBuilder(string name, string sourceName)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (sourceName == null)
-                throw new ArgumentNullException("sourceName");
+                throw new ArgumentNullException(nameof(sourceName));
 
             this.Name = name;
             this.SourceName = sourceName;
@@ -92,48 +92,42 @@ namespace Lury.Compiling.IR
         #region -- Public Methods --
 
         public void NoOperation()
-        {
-            this.instructions.Add(new Instruction(Operation.Nop));
-        }
+            => this.instructions.Add(new Instruction(Operation.Nop));
 
-        public int Load(Parameter x, int dest)
+        public int Load(Parameter from, int dest)
         {
-            if (x == null)
-                throw new ArgumentNullException("x");
+            if (from == null)
+                throw new ArgumentNullException(nameof(from));
 
             if (dest == NoAssign)
-                throw new ArgumentOutOfRangeException("dest");
+                throw new ArgumentOutOfRangeException(nameof(dest));
 
             this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Load, x));
+            this.instructions.Add(new Instruction(dest, Operation.Load, from));
             return dest;
         }
 
-        public void Store(int dest, Parameter x)
+        public void Store(int from, Parameter dest)
         {
-            if (x == null)
-                throw new ArgumentNullException("x");
+            if (dest == null)
+                throw new ArgumentNullException(nameof(from));
 
-            if (dest < 0)
-                throw new ArgumentOutOfRangeException("dest");
+            if (from < 0)
+                throw new ArgumentOutOfRangeException(nameof(dest));
             
-            this.instructions.Add(new Instruction(Operation.Store, Parameter.GetReference(dest), x));
+            this.instructions.Add(new Instruction(Operation.Store, Parameter.GetRegister(from), dest));
         }
 
         public void BeginScope()
-        {
-            this.instructions.Add(new Instruction(Operation.Scope));
-        }
+            => this.instructions.Add(new Instruction(Operation.Scope));
 
         public void EndScope()
-        {
-            this.instructions.Add(new Instruction(Operation.Break));
-        }
+            => this.instructions.Add(new Instruction(Operation.Break));
 
         public int Increment(Parameter x, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Inc, x));
@@ -143,7 +137,7 @@ namespace Lury.Compiling.IR
         public int Decrement(Parameter x, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Dec, x));
@@ -153,7 +147,7 @@ namespace Lury.Compiling.IR
         public int Positive(Parameter x, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Pos, x));
@@ -163,7 +157,7 @@ namespace Lury.Compiling.IR
         public int Negative(Parameter x, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Neg, x));
@@ -173,7 +167,7 @@ namespace Lury.Compiling.IR
         public int BitwiseNot(Parameter x, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Bnot, x));
@@ -183,10 +177,10 @@ namespace Lury.Compiling.IR
         public int Power(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Pow, x, y));
@@ -196,10 +190,10 @@ namespace Lury.Compiling.IR
         public int Multiply(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Mul, x, y));
@@ -209,10 +203,10 @@ namespace Lury.Compiling.IR
         public int Divide(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Div, x, y));
@@ -222,10 +216,10 @@ namespace Lury.Compiling.IR
         public int IntDivide(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Idiv, x, y));
@@ -235,10 +229,10 @@ namespace Lury.Compiling.IR
         public int Modulo(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Mod, x, y));
@@ -248,10 +242,10 @@ namespace Lury.Compiling.IR
         public int Add(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Add, x, y));
@@ -261,10 +255,10 @@ namespace Lury.Compiling.IR
         public int Subtract(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Sub, x, y));
@@ -274,10 +268,10 @@ namespace Lury.Compiling.IR
         public int Concat(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Con, x, y));
@@ -287,10 +281,10 @@ namespace Lury.Compiling.IR
         public int ShiftLeft(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Shl, x, y));
@@ -300,10 +294,10 @@ namespace Lury.Compiling.IR
         public int ShiftRight(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Shr, x, y));
@@ -313,10 +307,10 @@ namespace Lury.Compiling.IR
         public int BitwiseAnd(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.And, x, y));
@@ -326,10 +320,10 @@ namespace Lury.Compiling.IR
         public int BitwiseXor(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Xor, x, y));
@@ -339,10 +333,10 @@ namespace Lury.Compiling.IR
         public int BitwiseOr(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Or, x, y));
@@ -352,10 +346,10 @@ namespace Lury.Compiling.IR
         public int CompareLessThan(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Lt, x, y));
@@ -365,10 +359,10 @@ namespace Lury.Compiling.IR
         public int CompareGreaterThan(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Gt, x, y));
@@ -378,10 +372,10 @@ namespace Lury.Compiling.IR
         public int CompareLessThanOrEquals(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Ltq, x, y));
@@ -391,10 +385,10 @@ namespace Lury.Compiling.IR
         public int CompareGreaterThanOrEquals(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Gtq, x, y));
@@ -404,10 +398,10 @@ namespace Lury.Compiling.IR
         public int CompareEquals(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Eq, x, y));
@@ -417,10 +411,10 @@ namespace Lury.Compiling.IR
         public int CompareNotEquals(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Neq, x, y));
@@ -430,10 +424,10 @@ namespace Lury.Compiling.IR
         public int CompareIs(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Is, x, y));
@@ -443,10 +437,10 @@ namespace Lury.Compiling.IR
         public int CompareIsNot(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Isn, x, y));
@@ -456,20 +450,20 @@ namespace Lury.Compiling.IR
         public int LogicalNot(Parameter x, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
             
             this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Lnot, x));
+            this.instructions.Add(new Instruction(dest, Operation.Not, x));
             return dest;
         }
 
         public int LogicalAnd(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Land, x, y));
@@ -479,10 +473,10 @@ namespace Lury.Compiling.IR
         public int LogicalOr(Parameter x, Parameter y, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (y == null)
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Lor, x, y));
@@ -492,33 +486,30 @@ namespace Lury.Compiling.IR
         public void Return(Parameter x)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             this.instructions.Add(new Instruction(Operation.Ret, x));
         }
 
         public void Return()
-        {
-            this.instructions.Add(new Instruction(Operation.Ret, Parameter.Nil));
-        }
+            => this.instructions.Add(new Instruction(Operation.Ret, Parameter.Nil));
 
         public void Yield(Parameter x)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             this.instructions.Add(new Instruction(Operation.Yield, x));
         }
 
         public void Yield()
-        {
-            this.instructions.Add(new Instruction(Operation.Yield, Parameter.Nil));
-        }
+            => this.instructions.Add(new Instruction(Operation.Yield, Parameter.Nil));
+
 
         public void Throw(Parameter x)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             this.instructions.Add(new Instruction(Operation.Throw, x));
         }
@@ -526,16 +517,16 @@ namespace Lury.Compiling.IR
         public int Call(Parameter x, int dest, params Parameter[] parameters)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (dest == NoAssign)
-                throw new ArgumentOutOfRangeException("dest");
+                throw new ArgumentOutOfRangeException(nameof(dest));
 
             if (parameters == null)
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
 
             if (parameters.Any(p => p == null))
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
 
             this.CheckAndAssignRegister(ref dest);
 
@@ -549,13 +540,13 @@ namespace Lury.Compiling.IR
         public void CallWithoutReturn(Parameter x, params Parameter[] parameters)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (parameters == null)
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
 
             if (parameters.Any(p => p == null))
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
 
             var callParams = new Parameter[parameters.Length + 1];
             callParams[0] = x;
@@ -566,7 +557,7 @@ namespace Lury.Compiling.IR
         public int Eval(Parameter x, int dest = NoAssign)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Eval, x));
@@ -574,14 +565,12 @@ namespace Lury.Compiling.IR
         }
 
         public void Jump(string label)
-        {
-            this.instructions.Add(new Instruction(Operation.Jmp, Parameter.GetLabel(label)));
-        }
+            => this.instructions.Add(new Instruction(Operation.Jmp, Parameter.GetLabel(label)));
 
         public void JumpIfTrue(string label, Parameter x)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             this.instructions.Add(new Instruction(Operation.Jmpt, Parameter.GetLabel(label), x));
         }
@@ -589,7 +578,7 @@ namespace Lury.Compiling.IR
         public void JumpIfFalse(string label, Parameter x)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             this.instructions.Add(new Instruction(Operation.Jmpf, Parameter.GetLabel(label), x));
         }
@@ -597,7 +586,7 @@ namespace Lury.Compiling.IR
         public void JumpIfNil(string label, Parameter x)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             this.instructions.Add(new Instruction(Operation.Jmpn, Parameter.GetLabel(label), x));
         }
@@ -610,17 +599,15 @@ namespace Lury.Compiling.IR
         }
 
         public void Overlook()
-        {
-            this.instructions.Add(new Instruction(Operation.Ovlok));
-        }
+            => this.instructions.Add(new Instruction(Operation.Ovlok));
 
         public int CreateFunction(Routine routine, int dest)
         {
             if (routine == null)
-                throw new ArgumentNullException("routine");
+                throw new ArgumentNullException(nameof(routine));
 
             if (dest == NoAssign)
-                throw new ArgumentOutOfRangeException("dest");
+                throw new ArgumentOutOfRangeException(nameof(dest));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Func, Parameter.GetLabel(routine.Name)));
@@ -630,16 +617,16 @@ namespace Lury.Compiling.IR
         public int CreateClass(Routine initializeRoutine, int dest, params Parameter[] derivation)
         {
             if (initializeRoutine == null)
-                throw new ArgumentNullException("initializeRoutine");
+                throw new ArgumentNullException(nameof(initializeRoutine));
             
             if (dest == NoAssign)
-                throw new ArgumentOutOfRangeException("dest");
+                throw new ArgumentOutOfRangeException(nameof(dest));
 
             if (derivation == null)
-                throw new ArgumentNullException("derivation");
+                throw new ArgumentNullException(nameof(derivation));
 
             if (derivation.Any(p => p == null))
-                throw new ArgumentNullException("derivation");
+                throw new ArgumentNullException(nameof(derivation));
 
             this.CheckAndAssignRegister(ref dest);
 
@@ -653,24 +640,22 @@ namespace Lury.Compiling.IR
         public void SetAnnotation(Parameter x, Parameter target)
         {
             if (x == null)
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
 
             if (target == null)
-                throw new ArgumentNullException("target");
+                throw new ArgumentNullException(nameof(target));
 
             this.instructions.Add(new Instruction(Operation.Annot, target, x));
         }
 
         public Routine Build()
-        {
-            return new Routine(
+            => new Routine(
                 this.Name,
                 this.registerCount,
                 this.children,
                 this.instructions,
                 this.jumpLabels,
                 this.codePosition);
-        }
 
         public string GetLabelName(string name)
         {
@@ -687,20 +672,18 @@ namespace Lury.Compiling.IR
         }
 
         public void SetLabelAtCurrent(string name)
-        {
-            this.jumpLabels.Add(name, this.instructions.Count);
-        }
+            => this.jumpLabels.Add(name, this.instructions.Count);
 
         public void SetRoutinePosition(int line, int column, int length = 0)
         {
             if (line < 1)
-                throw new ArgumentOutOfRangeException("line");
+                throw new ArgumentOutOfRangeException(nameof(line));
 
             if (column < 1)
-                throw new ArgumentOutOfRangeException("column");
+                throw new ArgumentOutOfRangeException(nameof(column));
             
             if (length < 0)
-                throw new ArgumentOutOfRangeException("length");
+                throw new ArgumentOutOfRangeException(nameof(length));
 
             this.codePosition.Add(
                 -1,
@@ -710,13 +693,13 @@ namespace Lury.Compiling.IR
         public void SetPositionAtCurrent(int line, int column, int length = 0)
         {
             if (line < 1)
-                throw new ArgumentOutOfRangeException("line");
+                throw new ArgumentOutOfRangeException(nameof(line));
 
             if (column < 1)
-                throw new ArgumentOutOfRangeException("column");
+                throw new ArgumentOutOfRangeException(nameof(column));
 
             if (length < 0)
-                throw new ArgumentOutOfRangeException("length");
+                throw new ArgumentOutOfRangeException(nameof(length));
 
             this.codePosition.Add(
                 this.instructions.Count - 1,
@@ -738,8 +721,8 @@ namespace Lury.Compiling.IR
                 registerCount++;
                 return;
             }
-
-            throw new ArgumentOutOfRangeException("register");
+            else
+                throw new ArgumentOutOfRangeException(nameof(register));
         }
 
         #endregion
