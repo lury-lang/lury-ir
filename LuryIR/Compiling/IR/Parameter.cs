@@ -114,9 +114,7 @@ namespace Lury.Compiling.IR
         /// <param name="value">パラメータとして渡される整数値。</param>
         /// <returns>生成された <see cref="Lury.Compiling.IR.Parameter"/> オブジェクト。</returns>
         public static Parameter GetInteger(long value)
-        {
-            return new Parameter(value, ParameterType.Integer);
-        }
+            => new Parameter(value, ParameterType.Integer);
 
         /// <summary>
         /// 実数値から <see cref="Lury.Compiling.IR.Parameter"/> オブジェクトを生成します。
@@ -124,9 +122,7 @@ namespace Lury.Compiling.IR
         /// <param name="value">パラメータとして渡される実数値。</param>
         /// <returns>生成された <see cref="Lury.Compiling.IR.Parameter"/> オブジェクト。</returns>
         public static Parameter GetReal(double value)
-        {
-            return new Parameter(value, ParameterType.Real);
-        }
+            => new Parameter(value, ParameterType.Real);
 
         /// <summary>
         /// 複素数値から <see cref="Lury.Compiling.IR.Parameter"/> オブジェクトを生成します。
@@ -135,9 +131,7 @@ namespace Lury.Compiling.IR
         /// <param name="im">パラメータとして渡される複素数値の虚数部分。</param>
         /// <returns>生成された <see cref="Lury.Compiling.IR.Parameter"/> オブジェクト。</returns>
         public static Parameter GetComplex(double re, double im)
-        {
-            return new Parameter(new Complex(re, im), ParameterType.Complex);
-        }
+            => new Parameter(new Complex(re, im), ParameterType.Complex);
 
         /// <summary>
         /// 真偽値から <see cref="Lury.Compiling.IR.Parameter"/> オブジェクトを生成します。
@@ -145,9 +139,7 @@ namespace Lury.Compiling.IR
         /// <param name="value">パラメータとして渡される真偽値。</param>
         /// <returns>生成された <see cref="Lury.Compiling.IR.Parameter"/> オブジェクト。</returns>
         public static Parameter GetBoolean(bool value)
-        {
-            return value ? True : False;
-        }
+            => value ? True : False;
 
         /// <summary>
         /// 文字列から <see cref="Lury.Compiling.IR.Parameter"/> オブジェクトを生成します。
@@ -192,7 +184,7 @@ namespace Lury.Compiling.IR
         public static Parameter GetLabel(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
 
             return new Parameter(value, ParameterType.Label);
         }

@@ -104,10 +104,10 @@ namespace Lury.Compiling.IR
                        IDictionary<int, CodePosition> codePosition)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (registerCount < 0)
-                throw new ArgumentOutOfRangeException("registerCount");
+                throw new ArgumentOutOfRangeException(nameof(registerCount));
 
             this.Name = name;
             this.RegisterCount = registerCount;

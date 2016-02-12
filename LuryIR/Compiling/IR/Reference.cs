@@ -111,7 +111,7 @@ namespace Lury.Compiling.IR
                 throw new ArgumentOutOfRangeException("name");
 
             if (children == null)
-                throw new ArgumentNullException("children");
+                throw new ArgumentOutOfRangeException(nameof(name));
 
             if (children.Any(s => s == null))
                 throw new ArgumentNullException("children");
