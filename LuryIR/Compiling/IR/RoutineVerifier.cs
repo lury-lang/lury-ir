@@ -175,8 +175,8 @@ namespace Lury.Compiling.IR
                 case Operation.Dec:
                 case Operation.Pos:
                 case Operation.Neg:
-                case Operation.Bnot:
-                case Operation.Lnot:
+                case Operation.Inv:
+                case Operation.Not:
                 case Operation.Throw:
                 case Operation.Eval:
                 case Operation.Jmp:

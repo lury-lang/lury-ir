@@ -170,7 +170,7 @@ namespace Lury.Compiling.IR
                 throw new ArgumentNullException(nameof(x));
 
             this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Bnot, x));
+            this.instructions.Add(new Instruction(dest, Operation.Inv, x));
             return dest;
         }
 
