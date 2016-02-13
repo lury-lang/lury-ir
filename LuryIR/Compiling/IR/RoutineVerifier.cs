@@ -92,10 +92,9 @@ namespace Lury.Compiling.IR
         private void CheckRegisterCount(Routine routine)
         {
             int maxDestNum = routine.Instructions.Max(i => i.Destination);
-            int maxParamNum = routine.Instructions.SelectMany(i => i.Parameters.Select(p => p.Value)
-                                                                               .OfType<Reference>()
-                                                                               .Where(r => r.IsRegister)
-                                                                               .Select(r => r.Register)).Max();
+            int maxParamNum = routine.Instructions.SelectMany(i => i.Parameters.Where(p => p.Type == ParameterType.Register)
+                                                                               .Select(r => (int)r.Value))
+                                                                               .Max();
 
             int requireCount = Math.Max(maxDestNum, maxParamNum) + 1;
 
@@ -110,10 +109,8 @@ namespace Lury.Compiling.IR
 
         private void CheckUnusedRegister(Routine routine)
         {
-            var array = routine.Instructions.SelectMany(i => i.Parameters.Select(p => p.Value)
-                                                                         .OfType<Reference>()
-                                                                         .Where(r => r.IsRegister)
-                                                                         .Select(r => r.Register))
+            var array = routine.Instructions.SelectMany(i => i.Parameters.Where(p => p.Type == ParameterType.Register)
+                                                                         .Select(r => (int)r.Value))
                                             .OrderBy(i => i)
                                             .Distinct()
                                             .ToArray();
@@ -226,7 +223,7 @@ namespace Lury.Compiling.IR
                     return (inst.Parameters.Count >= 1);
 
                 default:
-                    throw new ArgumentOutOfRangeException("inst");
+                    throw new ArgumentOutOfRangeException(nameof(inst));
             }
         }
 
