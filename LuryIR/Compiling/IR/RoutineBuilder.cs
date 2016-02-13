@@ -98,9 +98,12 @@ namespace Lury.Compiling.IR
         {
             if (from == null)
                 throw new ArgumentNullException(nameof(from));
-
+            
             if (dest == NoAssign)
                 throw new ArgumentOutOfRangeException(nameof(dest));
+
+            if (from.Type != ParameterType.Reference)
+                throw new ArgumentOutOfRangeException(nameof(from));
 
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Load, from));
@@ -115,7 +118,69 @@ namespace Lury.Compiling.IR
             if (from < 0)
                 throw new ArgumentOutOfRangeException(nameof(dest));
             
+            if (dest.Type != ParameterType.Reference)
+                throw new ArgumentOutOfRangeException(nameof(dest));
+
             this.instructions.Add(new Instruction(Operation.Store, Parameter.GetRegister(from), dest));
+        }
+        
+        public void Remove(Parameter x)
+        {
+            if (x == null)
+                throw new ArgumentNullException(nameof(x));
+
+            if (x.Type != ParameterType.Reference)
+                throw new ArgumentOutOfRangeException(nameof(x));
+
+            this.instructions.Add(new Instruction(Operation.Remv, x));
+        }
+
+        public int Copy(int from, int dest)
+        {
+            if (from < 0)
+                throw new ArgumentOutOfRangeException(nameof(from));
+
+            if (dest < 0)
+                throw new ArgumentOutOfRangeException(nameof(dest));
+
+            if (from == dest)
+                throw new ArgumentOutOfRangeException(nameof(dest));
+
+            this.CheckAndAssignRegister(ref dest);
+            this.instructions.Add(new Instruction(Operation.Copy, Parameter.GetRegister(from), Parameter.GetRegister(dest)));
+            return dest;
+        }
+
+        public int Resolve(Parameter x, int dest)
+        {
+            if (x == null)
+                throw new ArgumentNullException(nameof(x));
+
+            if (x.Type != ParameterType.Reference)
+                throw new ArgumentOutOfRangeException(nameof(x));
+
+            if (dest == NoAssign)
+                throw new ArgumentOutOfRangeException(nameof(dest));
+
+            this.CheckAndAssignRegister(ref dest);
+            this.instructions.Add(new Instruction(Operation.Rslv, x));
+            return dest;
+        }
+
+        public int Has(Parameter x, int dest)
+        {
+            if (x == null)
+                throw new ArgumentNullException(nameof(x));
+
+            if (x.Type != ParameterType.Reference)
+                throw new ArgumentOutOfRangeException(nameof(x));
+
+            if (dest == NoAssign)
+                throw new ArgumentOutOfRangeException(nameof(dest));
+
+            this.CheckAndAssignRegister(ref dest);
+            this.instructions.Add(new Instruction(Operation.Has, x));
+            return dest;
         }
 
         public void BeginScope()
@@ -125,369 +190,95 @@ namespace Lury.Compiling.IR
             => this.instructions.Add(new Instruction(Operation.Break));
 
         public int Increment(Parameter x, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Inc, x));
-            return dest;
-        }
+            => this.AddUnary(Operation.Inc, x, dest);
 
         public int Decrement(Parameter x, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Dec, x));
-            return dest;
-        }
+            => this.AddUnary(Operation.Dec, x, dest);
 
         public int Positive(Parameter x, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Pos, x));
-            return dest;
-        }
+            => this.AddUnary(Operation.Pos, x, dest);
 
         public int Negative(Parameter x, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
+            => this.AddUnary(Operation.Neg, x, dest);
 
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Neg, x));
-            return dest;
-        }
-
-        public int BitwiseNot(Parameter x, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Inv, x));
-            return dest;
-        }
+        public int Invert(Parameter x, int dest = NoAssign)
+            => this.AddUnary(Operation.Inv, x, dest);
 
         public int Power(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Pow, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Pow, x, y, dest);
 
         public int Multiply(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Mul, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Mul, x, y, dest);
 
         public int Divide(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Div, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Div, x, y, dest);
 
         public int IntDivide(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Idiv, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Idiv, x, y, dest);
 
         public int Modulo(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Mod, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Mod, x, y, dest);
 
         public int Add(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Add, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Add, x, y, dest);
 
         public int Subtract(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Sub, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Sub, x, y, dest);
 
         public int Concat(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Con, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Con, x, y, dest);
 
         public int ShiftLeft(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Shl, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Shl, x, y, dest);
 
         public int ShiftRight(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Shr, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Shr, x, y, dest);
 
         public int BitwiseAnd(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.And, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.And, x, y, dest);
 
         public int BitwiseXor(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Xor, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Xor, x, y, dest);
 
         public int BitwiseOr(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Or, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Or, x, y, dest);
 
         public int CompareLessThan(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Lt, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Lt, x, y, dest);
 
         public int CompareGreaterThan(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Gt, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Gt, x, y, dest);
 
         public int CompareLessThanOrEquals(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Ltq, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Ltq, x, y, dest);
 
         public int CompareGreaterThanOrEquals(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Gtq, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Gtq, x, y, dest);
 
         public int CompareEquals(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Eq, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Eq, x, y, dest);
 
         public int CompareNotEquals(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Neq, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Neq, x, y, dest);
 
         public int CompareIs(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Is, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Is, x, y, dest);
 
         public int CompareIsNot(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
+            => this.AddBinary(Operation.Isn, x, y, dest);
 
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Isn, x, y));
-            return dest;
-        }
-
-        public int LogicalNot(Parameter x, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-            
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Not, x));
-            return dest;
-        }
+        public int Not(Parameter x, int dest = NoAssign)
+            => this.AddUnary(Operation.Not, x, dest);
 
         public int LogicalAnd(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Land, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Land, x, y, dest);
 
         public int LogicalOr(Parameter x, Parameter y, int dest = NoAssign)
-        {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (y == null)
-                throw new ArgumentNullException(nameof(y));
-
-            this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(dest, Operation.Lor, x, y));
-            return dest;
-        }
+            => this.AddBinary(Operation.Lor, x, y, dest);
 
         public void Return(Parameter x)
         {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
+            this.CheckUnaryParameter(x);
             this.instructions.Add(new Instruction(Operation.Ret, x));
         }
 
@@ -496,9 +287,7 @@ namespace Lury.Compiling.IR
 
         public void Yield(Parameter x)
         {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
+            this.CheckUnaryParameter(x);
             this.instructions.Add(new Instruction(Operation.Yield, x));
         }
 
@@ -508,16 +297,13 @@ namespace Lury.Compiling.IR
 
         public void Throw(Parameter x)
         {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
+            this.CheckUnaryParameter(x);
             this.instructions.Add(new Instruction(Operation.Throw, x));
         }
 
         public int Call(Parameter x, int dest, params Parameter[] parameters)
         {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
+            this.CheckUnaryParameter(x);
 
             if (dest == NoAssign)
                 throw new ArgumentOutOfRangeException(nameof(dest));
@@ -527,6 +313,10 @@ namespace Lury.Compiling.IR
 
             if (parameters.Any(p => p == null))
                 throw new ArgumentNullException(nameof(parameters));
+
+            if (parameters.Any(p => p.Type == ParameterType.Reference ||
+                                    p.Type == ParameterType.Label))
+                throw new ArgumentOutOfRangeException(nameof(parameters));
 
             this.CheckAndAssignRegister(ref dest);
 
@@ -539,14 +329,17 @@ namespace Lury.Compiling.IR
 
         public void CallWithoutReturn(Parameter x, params Parameter[] parameters)
         {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
+            this.CheckUnaryParameter(x);
 
             if (parameters == null)
                 throw new ArgumentNullException(nameof(parameters));
 
             if (parameters.Any(p => p == null))
                 throw new ArgumentNullException(nameof(parameters));
+
+            if (parameters.Any(p => p.Type == ParameterType.Reference ||
+                                    p.Type == ParameterType.Label))
+                throw new ArgumentOutOfRangeException(nameof(parameters));
 
             var callParams = new Parameter[parameters.Length + 1];
             callParams[0] = x;
@@ -556,9 +349,7 @@ namespace Lury.Compiling.IR
 
         public int Eval(Parameter x, int dest = NoAssign)
         {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
+            this.CheckUnaryParameter(x);
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, Operation.Eval, x));
             return dest;
@@ -569,25 +360,19 @@ namespace Lury.Compiling.IR
 
         public void JumpIfTrue(string label, Parameter x)
         {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
+            this.CheckUnaryParameter(x);
             this.instructions.Add(new Instruction(Operation.Jmpt, Parameter.GetLabel(label), x));
         }
 
         public void JumpIfFalse(string label, Parameter x)
         {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
+            this.CheckUnaryParameter(x);
             this.instructions.Add(new Instruction(Operation.Jmpf, Parameter.GetLabel(label), x));
         }
 
         public void JumpIfNil(string label, Parameter x)
         {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
+            this.CheckUnaryParameter(x);
             this.instructions.Add(new Instruction(Operation.Jmpn, Parameter.GetLabel(label), x));
         }
 
@@ -628,6 +413,10 @@ namespace Lury.Compiling.IR
             if (derivation.Any(p => p == null))
                 throw new ArgumentNullException(nameof(derivation));
 
+            if (derivation.Any(p => p.Type == ParameterType.Reference ||
+                                    p.Type == ParameterType.Label))
+                throw new ArgumentOutOfRangeException(nameof(derivation));
+
             this.CheckAndAssignRegister(ref dest);
 
             var classParams = new Parameter[derivation.Length + 1];
@@ -639,12 +428,7 @@ namespace Lury.Compiling.IR
 
         public void SetAnnotation(Parameter x, Parameter target)
         {
-            if (x == null)
-                throw new ArgumentNullException(nameof(x));
-
-            if (target == null)
-                throw new ArgumentNullException(nameof(target));
-
+            this.CheckBinaryParameters(x, target);
             this.instructions.Add(new Instruction(Operation.Annot, target, x));
         }
 
@@ -709,6 +493,49 @@ namespace Lury.Compiling.IR
         #endregion
 
         #region -- Private Methods --
+
+        private int AddUnary(Operation op, Parameter x, int dest)
+        {
+            this.CheckUnaryParameter(x);
+            this.CheckAndAssignRegister(ref dest);
+            this.instructions.Add(new Instruction(dest, op, x));
+            return dest;
+        }
+
+        private int AddBinary(Operation op, Parameter x, Parameter y, int dest)
+        {
+            this.CheckBinaryParameters(x, y);
+            this.CheckAndAssignRegister(ref dest);
+            this.instructions.Add(new Instruction(dest, op, x, y));
+            return dest;
+        }
+
+        private void CheckUnaryParameter(Parameter x)
+        {
+            if (x == null)
+                throw new ArgumentNullException(nameof(x));
+
+            if (x.Type == ParameterType.Reference ||
+                x.Type == ParameterType.Label)
+                throw new ArgumentOutOfRangeException(nameof(x));
+        }
+
+        private void CheckBinaryParameters(Parameter x, Parameter y)
+        {
+            if (x == null)
+                throw new ArgumentNullException(nameof(x));
+
+            if (y == null)
+                throw new ArgumentNullException(nameof(y));
+
+            if (x.Type == ParameterType.Reference ||
+                x.Type == ParameterType.Label)
+                throw new ArgumentOutOfRangeException(nameof(x));
+
+            if (y.Type == ParameterType.Reference ||
+                y.Type == ParameterType.Label)
+                throw new ArgumentOutOfRangeException(nameof(y));
+        }
 
         private void CheckAndAssignRegister(ref int register)
         {
