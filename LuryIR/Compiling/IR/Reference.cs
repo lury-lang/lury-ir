@@ -72,7 +72,7 @@ namespace Lury.Compiling.IR
         /// </summary>
         /// <returns>このインスタンスの状態を表す、レジスタ番号または変数名と子参照が含まれる文字列。</returns>
         public override string ToString()
-            => $"ref({this.Name})";
+            => $"*{this.Name}";
 
         #endregion
     }
