@@ -102,7 +102,7 @@ namespace Lury.Compiling.IR
             if (dest == NoAssign)
                 throw new ArgumentOutOfRangeException(nameof(dest));
 
-            if (from.Type != ParameterType.Reference)
+            if (from.Type == ParameterType.Label)
                 throw new ArgumentOutOfRangeException(nameof(from));
 
             this.CheckAndAssignRegister(ref dest);
