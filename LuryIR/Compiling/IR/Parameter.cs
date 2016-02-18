@@ -98,7 +98,7 @@ namespace Lury.Compiling.IR
                 case ParameterType.Boolean: return ((bool)this.Value ? "bool(true)" : "bool(false)");
                 case ParameterType.String: return "string(\"" + ((string)this.Value).ConvertControlChars() + "\")";
                 case ParameterType.Reference: return this.Value.ToString();
-                case ParameterType.Register: return "register(" + this.Value + ")";
+                case ParameterType.Register: return "%" + this.Value;
                 case ParameterType.Label: return "::" + this.Value;
                 default:
                     return "(invalid parameter)";
