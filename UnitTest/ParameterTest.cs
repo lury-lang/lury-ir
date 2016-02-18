@@ -109,53 +109,27 @@ namespace UnitTest
         [TestMethod]
         public void GetReferenceTest()
         {
-            const int register = 3;
             const string name = "fizzbuzz";
-            const string child1 = "foo";
-            const string child2 = "bar";
-
-            var registerParam1 = Parameter.GetReference(register, child1, child2);
-            var registerParam2 = Parameter.GetReference(register);
-            var nameParam1 = Parameter.GetReference(name, child1, child2);
-            var nameParam2 = Parameter.GetReference(name);
-
-            Assert.IsNotNull(registerParam1);
-            Assert.IsNotNull(registerParam2);
-            Assert.IsNotNull(nameParam1);
-            Assert.IsNotNull(nameParam2);
-
-            Assert.IsInstanceOfType(registerParam1.Value, typeof(Reference));
-            Assert.IsInstanceOfType(registerParam2.Value, typeof(Reference));
-            Assert.IsInstanceOfType(nameParam1.Value, typeof(Reference));
-            Assert.IsInstanceOfType(nameParam2.Value, typeof(Reference));
-
-            Assert.IsTrue(((Reference)registerParam1.Value).IsRegister);
-            Assert.IsTrue(((Reference)registerParam2.Value).IsRegister);
-            Assert.IsFalse(((Reference)nameParam1.Value).IsRegister);
-            Assert.IsFalse(((Reference)nameParam2.Value).IsRegister);
-
-            Assert.AreEqual(register, ((Reference)registerParam1.Value).Register);
-            Assert.AreEqual(register, ((Reference)registerParam2.Value).Register);
-            Assert.AreEqual(name, ((Reference)nameParam1.Value).Name);
-            Assert.AreEqual(name, ((Reference)nameParam2.Value).Name);
-
-            Assert.IsTrue(((Reference)registerParam1.Value).HasChildren);
-            Assert.IsFalse(((Reference)registerParam2.Value).HasChildren);
-            Assert.IsTrue(((Reference)nameParam1.Value).HasChildren);
-            Assert.IsFalse(((Reference)nameParam2.Value).HasChildren);
-
-            Assert.AreEqual(register, ((Reference)registerParam1.Value).Register);
-            Assert.AreEqual(register, ((Reference)registerParam2.Value).Register);
-            Assert.AreEqual(name, ((Reference)nameParam1.Value).Name);
-            Assert.AreEqual(name, ((Reference)nameParam2.Value).Name);
-
-            CollectionAssert.AreEquivalent(new[] { child1, child2 }, ((Reference)registerParam1.Value).Children.ToArray());
-            CollectionAssert.AreEquivalent(new[] { child1, child2 }, ((Reference)nameParam1.Value).Children.ToArray());
             
-            Assert.AreEqual(ParameterType.Reference, registerParam1.Type);
-            Assert.AreEqual(ParameterType.Reference, registerParam2.Type);
-            Assert.AreEqual(ParameterType.Reference, nameParam1.Type);
-            Assert.AreEqual(ParameterType.Reference, nameParam2.Type);
+            var nameParam = Parameter.GetReference(name);
+            
+            Assert.IsNotNull(nameParam);
+            Assert.IsInstanceOfType(nameParam.Value, typeof(Reference));
+            Assert.AreEqual(name, ((Reference)nameParam.Value).Name);
+            Assert.AreEqual(ParameterType.Reference, nameParam.Type);
+        }
+
+        [TestMethod]
+        public void GetRegisterTest()
+        {
+            const int register = 3;
+
+            var registerParam = Parameter.GetRegister(register);
+
+            Assert.IsNotNull(registerParam);
+            Assert.IsInstanceOfType(registerParam.Value, typeof(int));
+            Assert.AreEqual(register, (int)registerParam.Value);
+            Assert.AreEqual(ParameterType.Register, registerParam.Type);
         }
 
         [TestMethod]
@@ -195,8 +169,8 @@ namespace UnitTest
             Assert.AreEqual("bool(true)", Parameter.True.ToString());
             Assert.AreEqual("bool(false)", Parameter.False.ToString());
             Assert.AreEqual("string(\"test\\r\\nstring\")", Parameter.GetString("test\r\nstring").ToString());
-            Assert.AreEqual("%0.foo.bar", Parameter.GetReference(0, "foo", "bar").ToString());
-            Assert.AreEqual("*hoge.foo.bar", Parameter.GetReference("hoge", "foo", "bar").ToString());
+            Assert.AreEqual("%0", Parameter.GetRegister(0).ToString());
+            Assert.AreEqual("*hoge", Parameter.GetReference("hoge").ToString());
             Assert.AreEqual("::test_label", Parameter.GetLabel("test_label").ToString());
         }
     }
