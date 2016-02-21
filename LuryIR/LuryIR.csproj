@@ -44,6 +44,7 @@
     <Compile Include="Compiling\IR\VerifyOutputType.cs" />
     <Compile Include="Engine\Intrinsic\IntrinsicAttribute.cs" />
     <Compile Include="Engine\Intrinsic\IntrinsicBoolean.cs" />
+    <Compile Include="Engine\Intrinsic\IntrinsicIntrinsic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
