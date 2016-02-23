@@ -28,7 +28,7 @@
 
 using System;
 
-namespace Lury.Engine
+namespace Lury.Engine.Intrinsic
 {
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = true)]
     sealed class IntrinsicAttribute : Attribute

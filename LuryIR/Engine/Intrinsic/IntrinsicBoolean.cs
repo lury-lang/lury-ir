@@ -28,7 +28,7 @@
 
 using System;
 
-namespace Lury.Engine
+namespace Lury.Engine.Intrinsic
 {
     class IntrinsicBoolean
     {

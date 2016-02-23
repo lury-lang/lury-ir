@@ -28,6 +28,7 @@
 
 using System;
 using System.Collections.Generic;
+using Lury.Engine.Intrinsic;
 
 namespace Lury.Engine
 {
