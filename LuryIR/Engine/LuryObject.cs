@@ -37,8 +37,6 @@ namespace Lury.Engine
         #region -- Public Fields --
 
         public static readonly LuryObject Nil = new LuryObject(null, null, freeze: true);
-        public static readonly LuryObject True = new LuryObject(IntrinsicBoolean.TypeName, true, freeze: true);
-        public static readonly LuryObject False = new LuryObject(IntrinsicBoolean.TypeName, false, freeze: true);
 
         #endregion
 

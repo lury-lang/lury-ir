@@ -35,7 +35,10 @@ namespace Lury.Engine.Intrinsic
         #region -- Public Fields --
 
         public const string TypeName = "lury.core.Boolean";
-
+        
+        public static readonly LuryObject True = new LuryObject(IntrinsicBoolean.TypeName, true, freeze: true);
+        public static readonly LuryObject False = new LuryObject(IntrinsicBoolean.TypeName, false, freeze: true);
+        
         #endregion
 
         #region -- Public Static Methods --
@@ -46,7 +49,7 @@ namespace Lury.Engine.Intrinsic
             if (other.LuryTypeName != TypeName)
                 throw new ArgumentException();
 
-            return self.Value == other.Value ? LuryObject.True : LuryObject.False;
+            return self.Value == other.Value ? True : False;
         }
 
         [Intrinsic(TypeName, "opNe")]
@@ -55,7 +58,7 @@ namespace Lury.Engine.Intrinsic
             if (other.LuryTypeName != TypeName)
                 throw new ArgumentException();
 
-            return self.Value != other.Value ? LuryObject.True : LuryObject.False;
+            return self.Value != other.Value ? True : False;
         }
 
         [Intrinsic(TypeName, "opAnd")]
@@ -64,7 +67,7 @@ namespace Lury.Engine.Intrinsic
             if (other.LuryTypeName != TypeName)
                 throw new ArgumentException();
 
-            return (bool)self.Value & (bool)other.Value ? LuryObject.True : LuryObject.False;
+            return (bool)self.Value & (bool)other.Value ? True : False;
         }
 
         [Intrinsic(TypeName, "opXor")]
@@ -73,7 +76,7 @@ namespace Lury.Engine.Intrinsic
             if (other.LuryTypeName != TypeName)
                 throw new ArgumentException();
 
-            return (bool)self.Value ^ (bool)other.Value ? LuryObject.True : LuryObject.False;
+            return (bool)self.Value ^ (bool)other.Value ? True : False;
         }
 
         [Intrinsic(TypeName, "opOr")]
@@ -82,13 +85,13 @@ namespace Lury.Engine.Intrinsic
             if (other.LuryTypeName != TypeName)
                 throw new ArgumentException();
 
-            return (bool)self.Value | (bool)other.Value ? LuryObject.True : LuryObject.False;
+            return (bool)self.Value | (bool)other.Value ? True : False;
         }
 
         [Intrinsic(TypeName, "opNot")]
         public static LuryObject Not(LuryObject self)
         {
-            return (bool)self.Value ? LuryObject.False : LuryObject.True;
+            return (bool)self.Value ? False : True;
         }
 
         #endregion
