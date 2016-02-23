@@ -42,6 +42,7 @@
     <Compile Include="Compiling\IR\Routine.cs" />
     <Compile Include="Compiling\IR\RoutineVerifier.cs" />
     <Compile Include="Compiling\IR\VerifyOutputType.cs" />
+    <Compile Include="Engine\Intrinsic\IntrinsicClassAttribute.cs" />
     <Compile Include="Engine\ProgramContext.cs" />
     <Compile Include="Engine\Intrinsic\IntrinsicAttribute.cs" />
     <Compile Include="Engine\Intrinsic\IntrinsicBoolean.cs" />
