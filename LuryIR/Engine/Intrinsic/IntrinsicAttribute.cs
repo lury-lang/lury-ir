@@ -35,24 +35,20 @@ namespace Lury.Engine.Intrinsic
     {
         #region -- Private Fields --
         
-        private readonly string targetClass;
         private readonly string targetFunction;
 
         #endregion
 
         #region -- Public Propeties --
-
-        public string TargetClass => this.targetClass;
-
+        
         public string TargetFunction => this.targetFunction;
 
         #endregion
 
         #region -- Constructors --
 
-        public IntrinsicAttribute(string targetClass, string targetFunction)
+        public IntrinsicAttribute(string targetFunction)
         {
-            this.targetClass = targetClass;
             this.targetFunction = targetFunction;
         }
 
