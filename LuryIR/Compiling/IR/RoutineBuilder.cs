@@ -243,28 +243,28 @@ namespace Lury.Compiling.IR
         public int BitwiseOr(Parameter x, Parameter y, int dest = NoAssign)
             => this.AddBinary(Operation.Or, x, y, dest);
 
-        public int CompareLessThan(Parameter x, Parameter y, int dest = NoAssign)
+        public int LessThan(Parameter x, Parameter y, int dest = NoAssign)
             => this.AddBinary(Operation.Lt, x, y, dest);
 
-        public int CompareGreaterThan(Parameter x, Parameter y, int dest = NoAssign)
+        public int GreaterThan(Parameter x, Parameter y, int dest = NoAssign)
             => this.AddBinary(Operation.Gt, x, y, dest);
 
-        public int CompareLessThanOrEquals(Parameter x, Parameter y, int dest = NoAssign)
+        public int LessThanOrEquals(Parameter x, Parameter y, int dest = NoAssign)
             => this.AddBinary(Operation.Ltq, x, y, dest);
 
-        public int CompareGreaterThanOrEquals(Parameter x, Parameter y, int dest = NoAssign)
+        public int GreaterThanOrEquals(Parameter x, Parameter y, int dest = NoAssign)
             => this.AddBinary(Operation.Gtq, x, y, dest);
 
-        public int CompareEquals(Parameter x, Parameter y, int dest = NoAssign)
+        public int Equals(Parameter x, Parameter y, int dest = NoAssign)
             => this.AddBinary(Operation.Eq, x, y, dest);
 
-        public int CompareNotEquals(Parameter x, Parameter y, int dest = NoAssign)
+        public int NotEquals(Parameter x, Parameter y, int dest = NoAssign)
             => this.AddBinary(Operation.Neq, x, y, dest);
 
-        public int CompareIs(Parameter x, Parameter y, int dest = NoAssign)
+        public int Is(Parameter x, Parameter y, int dest = NoAssign)
             => this.AddBinary(Operation.Is, x, y, dest);
 
-        public int CompareIsNot(Parameter x, Parameter y, int dest = NoAssign)
+        public int IsNot(Parameter x, Parameter y, int dest = NoAssign)
             => this.AddBinary(Operation.Isn, x, y, dest);
 
         public int Not(Parameter x, int dest = NoAssign)
