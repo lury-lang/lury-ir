@@ -267,6 +267,12 @@ namespace Lury.Compiling.IR
         public int IsNot(Parameter x, Parameter y, int dest = NoAssign)
             => this.AddBinary(Operation.Isn, x, y, dest);
 
+        public int In(Parameter x, Parameter y, int dest = NoAssign)
+            => this.AddBinary(Operation.In, x, y, dest);
+
+        public int NotIn(Parameter x, Parameter y, int dest = NoAssign)
+            => this.AddBinary(Operation.NotIn, x, y, dest);
+
         public int Not(Parameter x, int dest = NoAssign)
             => this.AddUnary(Operation.Not, x, dest);
 
