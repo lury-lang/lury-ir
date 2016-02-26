@@ -113,8 +113,31 @@ namespace Lury.Compiling.IR
         /// </summary>
         /// <param name="value">パラメータとして渡される整数値。</param>
         /// <returns>生成された <see cref="Lury.Compiling.IR.Parameter"/> オブジェクト。</returns>
-        public static Parameter GetInteger(long value)
-            => new Parameter(value, ParameterType.Integer);
+        public static Parameter GetInteger(object value)
+        {
+            if (value is decimal)
+                return new Parameter(new BigInteger((decimal)value), ParameterType.Integer);
+            else if (value is double)
+                return new Parameter(new BigInteger((double)value), ParameterType.Integer);
+            else if (value is float)
+                return new Parameter(new BigInteger((float)value), ParameterType.Integer);
+            else if (value is ulong)
+                return new Parameter(new BigInteger((ulong)value), ParameterType.Integer);
+            else if (value is long)
+                return new Parameter(new BigInteger((long)value), ParameterType.Integer);
+            else if (value is uint)
+                return new Parameter(new BigInteger((uint)value), ParameterType.Integer);
+            else if (value is int)
+                return new Parameter(new BigInteger((int)value), ParameterType.Integer);
+            else if (value is BigInteger)
+                return new Parameter((BigInteger)value, ParameterType.Integer);
+            else if (value is string)
+                return new Parameter(BigInteger.Parse((string)value), ParameterType.Integer);
+            else if (value is byte[])
+                return new Parameter(new BigInteger((byte[])value), ParameterType.Integer);
+            else
+                throw new ArgumentException();
+        }
 
         /// <summary>
         /// 実数値から <see cref="Lury.Compiling.IR.Parameter"/> オブジェクトを生成します。
