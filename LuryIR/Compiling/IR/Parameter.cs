@@ -134,6 +134,15 @@ namespace Lury.Compiling.IR
             => new Parameter(new Complex(re, im), ParameterType.Complex);
 
         /// <summary>
+        /// 複素数値から <see cref="Lury.Compiling.IR.Parameter"/> オブジェクトを生成します。
+        /// </summary>
+        /// <param name="re">パラメータとして渡される複素数値の実数部分。</param>
+        /// <param name="im">パラメータとして渡される複素数値の虚数部分。</param>
+        /// <returns>生成された <see cref="Lury.Compiling.IR.Parameter"/> オブジェクト。</returns>
+        public static Parameter GetComplex(Complex value)
+            => new Parameter(value, ParameterType.Complex);
+
+        /// <summary>
         /// 真偽値から <see cref="Lury.Compiling.IR.Parameter"/> オブジェクトを生成します。
         /// </summary>
         /// <param name="value">パラメータとして渡される真偽値。</param>
