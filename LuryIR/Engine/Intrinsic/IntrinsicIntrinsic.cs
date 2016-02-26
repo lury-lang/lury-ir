@@ -30,6 +30,51 @@ namespace Lury.Engine.Intrinsic
 {
     class IntrinsicIntrinsic
     {
+        #region -- Public Fields --
+        
         public const string TypeName = "lury.core.implement.Intrinsic";
+
+        #region Intrinsic Function Name
+
+        public const string
+            OperatorPow = "opPow",
+
+            OperatorInc = "opInc",
+            OperatorDec = "opDec",
+
+            OperatorPos = "opPos",
+            OperatorNeg = "opNeg",
+            OperatorInv = "opInv",
+
+            OperatorMul = "opMul",
+            OperatorDiv = "opDiv",
+            OperatorIDiv = "opIDiv",
+            OperatorMod = "opMod",
+
+            OperatorAdd = "opAdd",
+            OperatorSub = "opSub",
+            OperatorCon = "opCon",
+
+            OperatorLShift = "opLShift",
+            OperatorRShift = "opRShift",
+
+            OperatorAnd = "opAnd",
+            OperatorXor = "opXor",
+            OperatorOr = "opOr",
+
+            OperatorEq = "opEq",
+            OperatorNe = "opNe",
+            OperatorLt = "opLt",
+            OperatorLtq = "opLtq",
+            OperatorGt = "opGt",
+            OperatorGtq = "opGtq",
+            OperatorIn = "opIn",
+            OperatorNotIn = "opNotIn",
+            
+            OperatorNot = "opNot";
+
+        #endregion
+
+        #endregion
     }
 }
