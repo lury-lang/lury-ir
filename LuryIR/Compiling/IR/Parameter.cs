@@ -158,7 +158,7 @@ namespace Lury.Compiling.IR
         public static Parameter GetString(string value)
         {
             if (value == null)
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
 
             return new Parameter(value, ParameterType.String);
         }
