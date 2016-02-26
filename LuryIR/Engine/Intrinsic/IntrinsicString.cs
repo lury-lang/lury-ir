@@ -27,6 +27,7 @@
 // THE SOFTWARE.
 
 using System;
+using static Lury.Engine.Intrinsic.IntrinsicIntrinsic;
 
 namespace Lury.Engine.Intrinsic
 {
@@ -47,7 +48,7 @@ namespace Lury.Engine.Intrinsic
         public static LuryObject GetObject(object value)
             => new LuryObject(FullName, (string)value, freeze: true);
 
-        [Intrinsic("opEq")]
+        [Intrinsic(OperatorEq)]
         public static LuryObject Equals(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName != TypeName)
@@ -56,7 +57,7 @@ namespace Lury.Engine.Intrinsic
             return self.Value == other.Value ? IntrinsicBoolean.True : IntrinsicBoolean.False;
         }
 
-        [Intrinsic("opNe")]
+        [Intrinsic(OperatorNe)]
         public static LuryObject NotEqual(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName != TypeName)
@@ -65,7 +66,7 @@ namespace Lury.Engine.Intrinsic
             return self.Value != other.Value ? IntrinsicBoolean.True : IntrinsicBoolean.False;
         }
 
-        [Intrinsic("opLt")]
+        [Intrinsic(OperatorLt)]
         public static LuryObject Lt(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName != TypeName)
@@ -74,7 +75,7 @@ namespace Lury.Engine.Intrinsic
             return ((string)self.Value).CompareTo(other.Value) < 0 ? IntrinsicBoolean.True : IntrinsicBoolean.False;
         }
 
-        [Intrinsic("opLtq")]
+        [Intrinsic(OperatorLtq)]
         public static LuryObject Ltq(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName != TypeName)
@@ -83,7 +84,7 @@ namespace Lury.Engine.Intrinsic
             return ((string)self.Value).CompareTo(other.Value) <= 0 ? IntrinsicBoolean.True : IntrinsicBoolean.False;
         }
 
-        [Intrinsic("opGt")]
+        [Intrinsic(OperatorGt)]
         public static LuryObject Gt(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName != TypeName)
@@ -92,7 +93,7 @@ namespace Lury.Engine.Intrinsic
             return ((string)self.Value).CompareTo(other.Value) > 0 ? IntrinsicBoolean.True : IntrinsicBoolean.False;
         }
 
-        [Intrinsic("opGtq")]
+        [Intrinsic(OperatorGtq)]
         public static LuryObject Gtq(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName != TypeName)
@@ -101,7 +102,7 @@ namespace Lury.Engine.Intrinsic
             return ((string)self.Value).CompareTo(other.Value) >= 0 ? IntrinsicBoolean.True : IntrinsicBoolean.False;
         }
 
-        [Intrinsic("opCon")]
+        [Intrinsic(OperatorCon)]
         public static LuryObject Con(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName != TypeName)
@@ -110,7 +111,7 @@ namespace Lury.Engine.Intrinsic
             return new LuryObject(TypeName, (string)self.Value + (string)other.Value, freeze: true);
         }
 
-        [Intrinsic("opIn")]
+        [Intrinsic(OperatorIn)]
         public static LuryObject In(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName != TypeName)
@@ -119,7 +120,7 @@ namespace Lury.Engine.Intrinsic
             return ((string)self.Value).Contains((string)other.Value) ? IntrinsicBoolean.True : IntrinsicBoolean.False;
         }
 
-        [Intrinsic("opNotIn")]
+        [Intrinsic(OperatorNotIn)]
         public static LuryObject NotIn(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName != TypeName)
