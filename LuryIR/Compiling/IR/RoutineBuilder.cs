@@ -98,7 +98,7 @@ namespace Lury.Compiling.IR
         {
             if (from == null)
                 throw new ArgumentNullException(nameof(from));
-            
+
             if (dest == NoAssign)
                 throw new ArgumentOutOfRangeException(nameof(dest));
 
@@ -117,13 +117,13 @@ namespace Lury.Compiling.IR
 
             if (from < 0)
                 throw new ArgumentOutOfRangeException(nameof(dest));
-            
+
             if (dest.Type != ParameterType.Reference)
                 throw new ArgumentOutOfRangeException(nameof(dest));
 
             this.instructions.Add(new Instruction(Operation.Store, Parameter.GetRegister(from), dest));
         }
-        
+
         public void Remove(Parameter x)
         {
             if (x == null)
@@ -367,19 +367,19 @@ namespace Lury.Compiling.IR
         public void JumpIfTrue(string label, Parameter x)
         {
             this.CheckUnaryParameter(x);
-            this.instructions.Add(new Instruction(Operation.Jmpt, Parameter.GetLabel(label), x));
+            this.instructions.Add(new Instruction(Operation.Jmpt, x, Parameter.GetLabel(label)));
         }
 
         public void JumpIfFalse(string label, Parameter x)
         {
             this.CheckUnaryParameter(x);
-            this.instructions.Add(new Instruction(Operation.Jmpf, Parameter.GetLabel(label), x));
+            this.instructions.Add(new Instruction(Operation.Jmpf, x, Parameter.GetLabel(label)));
         }
 
         public void JumpIfNil(string label, Parameter x)
         {
             this.CheckUnaryParameter(x);
-            this.instructions.Add(new Instruction(Operation.Jmpn, Parameter.GetLabel(label), x));
+            this.instructions.Add(new Instruction(Operation.Jmpn, x, Parameter.GetLabel(label)));
         }
 
         public int Catch(string label, int dest = NoAssign)
@@ -409,7 +409,7 @@ namespace Lury.Compiling.IR
         {
             if (initializeRoutine == null)
                 throw new ArgumentNullException(nameof(initializeRoutine));
-            
+
             if (dest == NoAssign)
                 throw new ArgumentOutOfRangeException(nameof(dest));
 
@@ -471,7 +471,7 @@ namespace Lury.Compiling.IR
 
             if (column < 1)
                 throw new ArgumentOutOfRangeException(nameof(column));
-            
+
             if (length < 0)
                 throw new ArgumentOutOfRangeException(nameof(length));
 
