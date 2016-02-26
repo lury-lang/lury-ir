@@ -27,6 +27,7 @@
 // THE SOFTWARE.
 
 using System;
+using static Lury.Engine.Intrinsic.IntrinsicIntrinsic;
 
 namespace Lury.Engine.Intrinsic
 {
@@ -45,7 +46,7 @@ namespace Lury.Engine.Intrinsic
 
         #region -- Public Static Methods --
 
-        [Intrinsic("opEq")]
+        [Intrinsic(OperatorEq)]
         public static LuryObject Equals(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName != TypeName)
@@ -54,7 +55,7 @@ namespace Lury.Engine.Intrinsic
             return self.Value == other.Value ? True : False;
         }
 
-        [Intrinsic("opNe")]
+        [Intrinsic(OperatorNe)]
         public static LuryObject NotEqual(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName != TypeName)
@@ -63,7 +64,7 @@ namespace Lury.Engine.Intrinsic
             return self.Value != other.Value ? True : False;
         }
 
-        [Intrinsic("opAnd")]
+        [Intrinsic(OperatorAnd)]
         public static LuryObject And(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName != TypeName)
@@ -72,7 +73,7 @@ namespace Lury.Engine.Intrinsic
             return (bool)self.Value & (bool)other.Value ? True : False;
         }
 
-        [Intrinsic("opXor")]
+        [Intrinsic(OperatorXor)]
         public static LuryObject Xor(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName != TypeName)
@@ -81,7 +82,7 @@ namespace Lury.Engine.Intrinsic
             return (bool)self.Value ^ (bool)other.Value ? True : False;
         }
 
-        [Intrinsic("opOr")]
+        [Intrinsic(OperatorOr)]
         public static LuryObject Or(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName != TypeName)
@@ -90,7 +91,7 @@ namespace Lury.Engine.Intrinsic
             return (bool)self.Value | (bool)other.Value ? True : False;
         }
 
-        [Intrinsic("opNot")]
+        [Intrinsic(OperatorNot)]
         public static LuryObject Not(LuryObject self)
         {
             return (bool)self.Value ? False : True;
