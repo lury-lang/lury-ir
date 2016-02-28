@@ -43,8 +43,8 @@ namespace UnitTest
             var param = Parameter.GetInteger(value);
 
             Assert.IsNotNull(param);
-            Assert.IsInstanceOfType(param.Value, typeof(long));
-            Assert.AreEqual(value, param.Value);
+            Assert.IsInstanceOfType(param.Value, typeof(BigInteger));
+            Assert.AreEqual(new BigInteger(value), param.Value);
             Assert.AreEqual(ParameterType.Integer, param.Type);
         }
 
