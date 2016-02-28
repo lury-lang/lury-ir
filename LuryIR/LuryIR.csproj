@@ -43,11 +43,14 @@
     <Compile Include="Compiling\IR\RoutineVerifier.cs" />
     <Compile Include="Compiling\IR\VerifyOutputType.cs" />
     <Compile Include="Engine\Intrinsic\IntrinsicClassAttribute.cs" />
+    <Compile Include="Engine\Intrinsic\IntrinsicComplex.cs" />
     <Compile Include="Engine\Intrinsic\IntrinsicReal.cs" />
     <Compile Include="Engine\Intrinsic\IntrinsicInteger.cs" />
     <Compile Include="Engine\Intrinsic\IntrinsicString.cs" />
     <Compile Include="Engine\ProgramContext.cs" />
+    <Compile Include="Engine\ExecuteEngine.cs" />
     <Compile Include="Engine\Intrinsic\IntrinsicAttribute.cs" />
+    <Compile Include="Engine\Intrinsic\IntrinsicFunction.cs" />
     <Compile Include="Engine\Intrinsic\IntrinsicBoolean.cs" />
     <Compile Include="Engine\Intrinsic\IntrinsicIntrinsic.cs" />
     <Compile Include="Engine\LuryObject.cs" />
