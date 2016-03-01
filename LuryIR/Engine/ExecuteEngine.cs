@@ -341,12 +341,6 @@ namespace Lury.Engine
                         temporaryObject = this.CallUnaryOperator(OperatorNot, register, instruction.Parameters[0], currentContext);
                         break;
 
-                    case Operation.Land:
-                        throw new NotImplementedException();
-
-                    case Operation.Lor:
-                        throw new NotImplementedException();
-
                     case Operation.Ret:
                         if (instruction.Parameters.Count == 0)
                             return LuryObject.Nil;

@@ -276,12 +276,6 @@ namespace Lury.Compiling.IR
         public int Not(Parameter x, int dest = NoAssign)
             => this.AddUnary(Operation.Not, x, dest);
 
-        public int LogicalAnd(Parameter x, Parameter y, int dest = NoAssign)
-            => this.AddBinary(Operation.Land, x, y, dest);
-
-        public int LogicalOr(Parameter x, Parameter y, int dest = NoAssign)
-            => this.AddBinary(Operation.Lor, x, y, dest);
-
         public void Return(Parameter x)
         {
             this.CheckUnaryParameter(x);
