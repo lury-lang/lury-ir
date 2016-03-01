@@ -51,7 +51,7 @@ namespace Lury.Engine.Intrinsic
         [Intrinsic(OperatorEq)]
         public static LuryObject Equals(LuryObject self, LuryObject other)
         {
-            if (other.LuryTypeName != TypeName)
+            if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
             return self.Value == other.Value ? IntrinsicBoolean.True : IntrinsicBoolean.False;
@@ -60,7 +60,7 @@ namespace Lury.Engine.Intrinsic
         [Intrinsic(OperatorNe)]
         public static LuryObject NotEqual(LuryObject self, LuryObject other)
         {
-            if (other.LuryTypeName != TypeName)
+            if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
             return self.Value != other.Value ? IntrinsicBoolean.True : IntrinsicBoolean.False;
@@ -69,7 +69,7 @@ namespace Lury.Engine.Intrinsic
         [Intrinsic(OperatorLt)]
         public static LuryObject Lt(LuryObject self, LuryObject other)
         {
-            if (other.LuryTypeName != TypeName)
+            if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
             return ((string)self.Value).CompareTo(other.Value) < 0 ? IntrinsicBoolean.True : IntrinsicBoolean.False;
@@ -78,7 +78,7 @@ namespace Lury.Engine.Intrinsic
         [Intrinsic(OperatorLtq)]
         public static LuryObject Ltq(LuryObject self, LuryObject other)
         {
-            if (other.LuryTypeName != TypeName)
+            if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
             return ((string)self.Value).CompareTo(other.Value) <= 0 ? IntrinsicBoolean.True : IntrinsicBoolean.False;
@@ -87,7 +87,7 @@ namespace Lury.Engine.Intrinsic
         [Intrinsic(OperatorGt)]
         public static LuryObject Gt(LuryObject self, LuryObject other)
         {
-            if (other.LuryTypeName != TypeName)
+            if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
             return ((string)self.Value).CompareTo(other.Value) > 0 ? IntrinsicBoolean.True : IntrinsicBoolean.False;
@@ -96,7 +96,7 @@ namespace Lury.Engine.Intrinsic
         [Intrinsic(OperatorGtq)]
         public static LuryObject Gtq(LuryObject self, LuryObject other)
         {
-            if (other.LuryTypeName != TypeName)
+            if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
             return ((string)self.Value).CompareTo(other.Value) >= 0 ? IntrinsicBoolean.True : IntrinsicBoolean.False;
@@ -105,7 +105,7 @@ namespace Lury.Engine.Intrinsic
         [Intrinsic(OperatorCon)]
         public static LuryObject Con(LuryObject self, LuryObject other)
         {
-            if (other.LuryTypeName != TypeName)
+            if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
             return new LuryObject(TypeName, (string)self.Value + (string)other.Value, freeze: true);
@@ -114,7 +114,7 @@ namespace Lury.Engine.Intrinsic
         [Intrinsic(OperatorIn)]
         public static LuryObject In(LuryObject self, LuryObject other)
         {
-            if (other.LuryTypeName != TypeName)
+            if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
             return ((string)self.Value).Contains((string)other.Value) ? IntrinsicBoolean.True : IntrinsicBoolean.False;
@@ -123,7 +123,7 @@ namespace Lury.Engine.Intrinsic
         [Intrinsic(OperatorNotIn)]
         public static LuryObject NotIn(LuryObject self, LuryObject other)
         {
-            if (other.LuryTypeName != TypeName)
+            if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
             return ((string)self.Value).Contains((string)other.Value) ? IntrinsicBoolean.False : IntrinsicBoolean.True;
