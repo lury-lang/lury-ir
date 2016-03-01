@@ -189,11 +189,11 @@ namespace Lury.Compiling.IR
         public void EndScope()
             => this.instructions.Add(new Instruction(Operation.Break));
 
-        public int Increment(Parameter x, int dest = NoAssign)
-            => this.AddUnary(Operation.Inc, x, dest);
+        public int Increment(Parameter x)
+            => this.AddUnaryWithSideEffect(Operation.Inc, x);
 
-        public int Decrement(Parameter x, int dest = NoAssign)
-            => this.AddUnary(Operation.Dec, x, dest);
+        public int Decrement(Parameter x)
+            => this.AddUnaryWithSideEffect(Operation.Dec, x);
 
         public int Positive(Parameter x, int dest = NoAssign)
             => this.AddUnary(Operation.Pos, x, dest);
@@ -500,6 +500,17 @@ namespace Lury.Compiling.IR
 
         #region -- Private Methods --
 
+        private int AddUnaryWithSideEffect(Operation op, Parameter x)
+        {
+            // check: x is register parameter?
+            this.CheckUnaryParameterWithSideEffect(x);
+
+            int register = (int)x.Value;
+            this.CheckAndAssignRegisterWidthSideEffect(register);
+            this.instructions.Add(new Instruction(register, op, x));
+            return register;
+        }
+
         private int AddUnary(Operation op, Parameter x, int dest)
         {
             this.CheckUnaryParameter(x);
@@ -514,6 +525,15 @@ namespace Lury.Compiling.IR
             this.CheckAndAssignRegister(ref dest);
             this.instructions.Add(new Instruction(dest, op, x, y));
             return dest;
+        }
+
+        private void CheckUnaryParameterWithSideEffect(Parameter x)
+        {
+            if (x == null)
+                throw new ArgumentNullException(nameof(x));
+
+            if (x.Type != ParameterType.Register)
+                throw new ArgumentOutOfRangeException(nameof(x));
         }
 
         private void CheckUnaryParameter(Parameter x)
@@ -541,6 +561,12 @@ namespace Lury.Compiling.IR
             if (y.Type == ParameterType.Reference ||
                 y.Type == ParameterType.Label)
                 throw new ArgumentOutOfRangeException(nameof(y));
+        }
+
+        private void CheckAndAssignRegisterWidthSideEffect(int register)
+        {
+            if (register < 0)
+                throw new ArgumentOutOfRangeException(nameof(register));
         }
 
         private void CheckAndAssignRegister(ref int register)
