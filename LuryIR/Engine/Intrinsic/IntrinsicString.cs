@@ -28,6 +28,7 @@
 
 using System;
 using static Lury.Engine.Intrinsic.IntrinsicIntrinsic;
+using static Lury.Engine.Intrinsic.IntrinsicBoolean;
 
 namespace Lury.Engine.Intrinsic
 {
@@ -54,7 +55,7 @@ namespace Lury.Engine.Intrinsic
             if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
-            return self.Value == other.Value ? IntrinsicBoolean.True : IntrinsicBoolean.False;
+            return self.Value == other.Value ? True : False;
         }
 
         [Intrinsic(OperatorNe)]
@@ -63,7 +64,7 @@ namespace Lury.Engine.Intrinsic
             if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
-            return self.Value != other.Value ? IntrinsicBoolean.True : IntrinsicBoolean.False;
+            return self.Value != other.Value ? True : False;
         }
 
         [Intrinsic(OperatorLt)]
@@ -72,7 +73,7 @@ namespace Lury.Engine.Intrinsic
             if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
-            return ((string)self.Value).CompareTo(other.Value) < 0 ? IntrinsicBoolean.True : IntrinsicBoolean.False;
+            return ((string)self.Value).CompareTo(other.Value) < 0 ? True : False;
         }
 
         [Intrinsic(OperatorLtq)]
@@ -81,7 +82,7 @@ namespace Lury.Engine.Intrinsic
             if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
-            return ((string)self.Value).CompareTo(other.Value) <= 0 ? IntrinsicBoolean.True : IntrinsicBoolean.False;
+            return ((string)self.Value).CompareTo(other.Value) <= 0 ? True : False;
         }
 
         [Intrinsic(OperatorGt)]
@@ -90,7 +91,7 @@ namespace Lury.Engine.Intrinsic
             if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
-            return ((string)self.Value).CompareTo(other.Value) > 0 ? IntrinsicBoolean.True : IntrinsicBoolean.False;
+            return ((string)self.Value).CompareTo(other.Value) > 0 ? True : False;
         }
 
         [Intrinsic(OperatorGtq)]
@@ -99,7 +100,7 @@ namespace Lury.Engine.Intrinsic
             if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
-            return ((string)self.Value).CompareTo(other.Value) >= 0 ? IntrinsicBoolean.True : IntrinsicBoolean.False;
+            return ((string)self.Value).CompareTo(other.Value) >= 0 ? True : False;
         }
 
         [Intrinsic(OperatorCon)]
@@ -117,7 +118,7 @@ namespace Lury.Engine.Intrinsic
             if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
-            return ((string)self.Value).Contains((string)other.Value) ? IntrinsicBoolean.True : IntrinsicBoolean.False;
+            return ((string)self.Value).Contains((string)other.Value) ? True : False;
         }
 
         [Intrinsic(OperatorNotIn)]
@@ -126,7 +127,7 @@ namespace Lury.Engine.Intrinsic
             if (other.LuryTypeName != FullName)
                 throw new ArgumentException();
 
-            return ((string)self.Value).Contains((string)other.Value) ? IntrinsicBoolean.False : IntrinsicBoolean.True;
+            return ((string)self.Value).Contains((string)other.Value) ? False : True;
         }
 
         #endregion
