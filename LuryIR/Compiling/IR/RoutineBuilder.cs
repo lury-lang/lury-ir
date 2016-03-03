@@ -147,7 +147,7 @@ namespace Lury.Compiling.IR
                 throw new ArgumentOutOfRangeException(nameof(dest));
 
             this.CheckAndAssignRegister(ref dest);
-            this.instructions.Add(new Instruction(Operation.Copy, Parameter.GetRegister(from), Parameter.GetRegister(dest)));
+            this.instructions.Add(new Instruction(dest, Operation.Copy, Parameter.GetRegister(from)));
             return dest;
         }
 
