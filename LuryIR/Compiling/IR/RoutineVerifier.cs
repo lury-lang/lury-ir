@@ -165,6 +165,10 @@ namespace Lury.Compiling.IR
 
                 // 1 param
                 case Operation.Load:
+                case Operation.Remv:
+                case Operation.Copy:
+                case Operation.Rslv:
+                case Operation.Has:
                 case Operation.Inc:
                 case Operation.Dec:
                 case Operation.Pos:
@@ -201,8 +205,8 @@ namespace Lury.Compiling.IR
                 case Operation.Neq:
                 case Operation.Is:
                 case Operation.Isn:
-                case Operation.Land:
-                case Operation.Lor:
+                case Operation.In:
+                case Operation.NotIn:
                 case Operation.Jmpt:
                 case Operation.Jmpf:
                 case Operation.Jmpn:
