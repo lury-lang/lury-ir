@@ -96,13 +96,13 @@ namespace Lury.Engine
                 var type = new LuryObject(t, null);
 
                 foreach (var item in f)
-                    type.SetMember(item, new LuryObject(IntrinsicFunction.TypeName, t + "." + item, annotations: new[] { intrinsic }, freeze: true));
+                    type.SetMember(item, new LuryObject(IntrinsicFunction.FullName, t + "." + item, annotations: new[] { intrinsic }, freeze: true));
                 type.Freeze();
                 this.globalContext[n] = type;
                 this.globalContext[type.LuryTypeName] = type;
             };
 
-            setFunctionMember(IntrinsicFunction.TypeName, "Function", new[] { "opCall" });
+            setFunctionMember(IntrinsicFunction.FullName, IntrinsicFunction.TypeName, new[] { IntrinsicIntrinsic.OperatorCall });
 
             var intrinsicTypes = Assembly
                 .GetExecutingAssembly()
@@ -421,7 +421,7 @@ namespace Lury.Engine
             var op = x.GetMember(funcName, context);
             var f = op.GetMember("opCall", context);
 
-            if (f.LuryTypeName == IntrinsicFunction.TypeName)
+            if (f.LuryTypeName == IntrinsicFunction.FullName)
                 return this.Call(op, x);
             else
                 throw new InvalidOperationException();
@@ -435,7 +435,7 @@ namespace Lury.Engine
             var op = x.GetMember(funcName, context);
             var f = op.GetMember("opCall", context);
 
-            if (f.LuryTypeName == IntrinsicFunction.TypeName)
+            if (f.LuryTypeName == IntrinsicFunction.FullName)
                 return this.Call(op, x, y);
             else
                 throw new InvalidOperationException();

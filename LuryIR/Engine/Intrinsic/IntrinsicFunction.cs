@@ -30,6 +30,11 @@ namespace Lury.Engine.Intrinsic
 {
     class IntrinsicFunction
     {
-        public const string TypeName = "lury.core.Function";
+        #region -- Public Fields --
+
+        public const string FullName = "lury.core.Function";
+        public const string TypeName = "Function";
+
+        #endregion
     }
 }
