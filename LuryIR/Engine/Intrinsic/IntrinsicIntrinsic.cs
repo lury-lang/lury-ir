@@ -70,8 +70,10 @@ namespace Lury.Engine.Intrinsic
             OperatorGtq = "opGtq",
             OperatorIn = "opIn",
             OperatorNotIn = "opNotIn",
-            
-            OperatorNot = "opNot";
+
+            OperatorNot = "opNot",
+
+            OperatorCall = "opCall";
 
         #endregion
 
