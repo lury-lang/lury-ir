@@ -87,8 +87,8 @@ namespace Lury.Engine
         {
             // 一時的なメソッド
 
-            var intrinsic = new LuryObject(IntrinsicIntrinsic.TypeName, null, freeze: true);
-            this.globalContext["Intrinsic"] = intrinsic;
+            var intrinsic = new LuryObject(IntrinsicIntrinsic.FullName, null, freeze: true);
+            this.globalContext[IntrinsicIntrinsic.TypeName] = intrinsic;
             this.globalContext[intrinsic.LuryTypeName] = intrinsic;
 
             Action<string, string, IEnumerable<string>> setFunctionMember = (t, n, f) =>
@@ -445,7 +445,7 @@ namespace Lury.Engine
 
         private LuryObject Call(LuryObject self, params LuryObject[] parameters)
         {
-            if (self.Annotations.Any(o => o.LuryTypeName == IntrinsicIntrinsic.TypeName))
+            if (self.Annotations.Any(o => o.LuryTypeName == IntrinsicIntrinsic.FullName))
             {
                 var intrinsicMethod = intrinsicMap[(string)self.Value];
                 return (LuryObject)intrinsicMethod.Invoke(null, parameters);
@@ -461,7 +461,7 @@ namespace Lury.Engine
 
         private LuryObject Eval(LuryObject self)
         {
-            if (self.Annotations.Any(o => o.LuryTypeName == IntrinsicIntrinsic.TypeName))
+            if (self.Annotations.Any(o => o.LuryTypeName == IntrinsicIntrinsic.FullName))
             {
                 var intrinsicMethod = intrinsicMap[(string)self.Value];
                 return (LuryObject)intrinsicMethod.Invoke(null, null);

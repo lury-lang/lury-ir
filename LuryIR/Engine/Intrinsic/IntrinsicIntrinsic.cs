@@ -31,8 +31,9 @@ namespace Lury.Engine.Intrinsic
     class IntrinsicIntrinsic
     {
         #region -- Public Fields --
-        
-        public const string TypeName = "lury.core.implement.Intrinsic";
+
+        public const string FullName = "lury.core.implement.Intrinsic";
+        public const string TypeName = "Intrinsic";
 
         #region Intrinsic Function Name
 
