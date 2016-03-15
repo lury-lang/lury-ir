@@ -61,12 +61,12 @@ namespace Lury.Compiling.IR
         /// <summary>
         /// パラメータの値を取得します。
         /// </summary>
-        public object Value { get; private set; }
+        public object Value { get; }
 
         /// <summary>
         /// パラメータの種類を表す <see cref="Lury.Compiling.IR.ParameterType"/> の値を取得します。
         /// </summary>
-        public ParameterType Type { get; private set; }
+        public ParameterType Type { get; }
 
         #endregion
 
