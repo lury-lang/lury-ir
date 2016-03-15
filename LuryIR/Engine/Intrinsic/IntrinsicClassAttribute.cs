@@ -34,17 +34,14 @@ namespace Lury.Engine.Intrinsic
     sealed class IntrinsicClassAttribute : Attribute
     {
         #region -- Private Fields --
-        
-        private readonly string fullname;
-        private readonly string typename;
 
         #endregion
 
         #region -- Public Propeties --
 
-        public string FullName => this.fullname;
+        public string FullName { get; }
 
-        public string TypeName => this.typename;
+        public string TypeName { get; }
 
         #endregion
 
@@ -52,8 +49,8 @@ namespace Lury.Engine.Intrinsic
 
         public IntrinsicClassAttribute(string fullname, string typename)
         {
-            this.fullname = fullname;
-            this.typename = typename;
+            this.FullName = fullname;
+            this.TypeName = typename;
         }
 
         #endregion
