@@ -34,14 +34,12 @@ namespace Lury.Engine.Intrinsic
     sealed class IntrinsicAttribute : Attribute
     {
         #region -- Private Fields --
-        
-        private readonly string targetFunction;
 
         #endregion
 
         #region -- Public Propeties --
         
-        public string TargetFunction => this.targetFunction;
+        public string TargetFunction { get; }
 
         #endregion
 
@@ -49,7 +47,7 @@ namespace Lury.Engine.Intrinsic
 
         public IntrinsicAttribute(string targetFunction)
         {
-            this.targetFunction = targetFunction;
+            this.TargetFunction = targetFunction;
         }
 
         #endregion
