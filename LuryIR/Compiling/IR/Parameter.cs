@@ -159,8 +159,7 @@ namespace Lury.Compiling.IR
         /// <summary>
         /// 複素数値から <see cref="Lury.Compiling.IR.Parameter"/> オブジェクトを生成します。
         /// </summary>
-        /// <param name="re">パラメータとして渡される複素数値の実数部分。</param>
-        /// <param name="im">パラメータとして渡される複素数値の虚数部分。</param>
+        /// <param name="value">パラメータとして渡される複素数値。</param>
         /// <returns>生成された <see cref="Lury.Compiling.IR.Parameter"/> オブジェクト。</returns>
         public static Parameter GetComplex(Complex value)
             => new Parameter(value, ParameterType.Complex);
@@ -197,7 +196,7 @@ namespace Lury.Compiling.IR
         /// <summary>
         /// 変数名と子参照から <see cref="Lury.Compiling.IR.Parameter"/> オブジェクトを生成します。
         /// </summary>
-        /// <param name="name">パラメータとして渡されるレジスタ番号。</param>
+        /// <param name="value">パラメータとして渡されるレジスタ番号。</param>
         /// <returns>生成された <see cref="Lury.Compiling.IR.Parameter"/> オブジェクト。</returns>
         public static Parameter GetRegister(int value)
         {
