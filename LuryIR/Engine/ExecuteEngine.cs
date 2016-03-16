@@ -207,7 +207,7 @@ namespace Lury.Engine
                             throw new InvalidOperationException();
 
                         x = this.Load(register, instruction.Parameters[0], currentContext);
-                        Store(register, x, (Reference)instruction.Parameters[1].Value, currentContext);
+                        Store(x, (Reference)instruction.Parameters[1].Value, currentContext);
                         break;
 
                     case Operation.Scope:
@@ -409,7 +409,7 @@ namespace Lury.Engine
             return LuryObject.Nil;
         }
         
-        private static void Store(LuryObject[] register, LuryObject obj, Reference toRef, ProgramContext context)
+        private static void Store(LuryObject obj, Reference toRef, ProgramContext context)
         {
             context[toRef.Name] = obj;
         }
