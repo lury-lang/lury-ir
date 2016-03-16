@@ -447,7 +447,7 @@ namespace Lury.Engine
         {
             if (self.Annotations.Any(o => o.LuryTypeName == IntrinsicIntrinsic.FullName))
             {
-                var intrinsicMethod = intrinsicMap[(string)self.Value];
+                var intrinsicMethod = this.intrinsicMap[(string)self.Value];
                 return (LuryObject)intrinsicMethod.Invoke(null, parameters);
             }
             else
@@ -463,7 +463,7 @@ namespace Lury.Engine
         {
             if (self.Annotations.Any(o => o.LuryTypeName == IntrinsicIntrinsic.FullName))
             {
-                var intrinsicMethod = intrinsicMap[(string)self.Value];
+                var intrinsicMethod = this.intrinsicMap[(string)self.Value];
                 return (LuryObject)intrinsicMethod.Invoke(null, null);
             }
             else
