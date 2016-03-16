@@ -53,13 +53,13 @@ namespace Lury.Engine
 
         #region -- Public Properties --
 
-        public string LuryTypeName => this.luryTypeName;
+        public string LuryTypeName { get; }
 
-        public object Value => this.value;
+        public object Value { get; }
 
         public IEnumerable<LuryObject> Annotations => this.annotations;
 
-        public bool IsFrozen => this.isFrozen;
+        public bool IsFrozen { get; private set; }
 
         #endregion
 
@@ -67,8 +67,8 @@ namespace Lury.Engine
 
         public LuryObject(string luryTypeName, object value, bool freeze = false, IEnumerable<LuryObject> annotations = null)
         {
-            this.luryTypeName = luryTypeName;
-            this.value = value;
+            this.LuryTypeName = luryTypeName;
+            this.Value = value;
             this.annotations = new List<LuryObject>(0);
 
             if (annotations != null)
@@ -84,7 +84,7 @@ namespace Lury.Engine
 
         public void SetMember(string name, LuryObject value)
         {
-            if (this.isFrozen)
+            if (this.IsFrozen)
                 throw new InvalidOperationException();
 
             if (this.Members.ContainsKey(name))
@@ -98,9 +98,9 @@ namespace Lury.Engine
             if (this.Members.ContainsKey(name))
                 return this.Members[name];
 
-            else if (this.luryTypeName != null && context.HasMember(this.luryTypeName))
+            else if (this.LuryTypeName != null && context.HasMember(this.LuryTypeName))
             {
-                return context[this.luryTypeName].GetMemberNoRecursion(name);
+                return context[this.LuryTypeName].GetMemberNoRecursion(name);
             }
             else
                 //throw new LuryException(LuryExceptionType.NameIsNotFound);
@@ -109,7 +109,7 @@ namespace Lury.Engine
 
         public void AddAnnotation(LuryObject obj)
         {
-            if (this.isFrozen)
+            if (this.IsFrozen)
                 throw new InvalidOperationException();
 
             this.annotations.Add(obj);
@@ -122,7 +122,7 @@ namespace Lury.Engine
 
         public void Freeze()
         {
-            this.isFrozen = true;
+            this.IsFrozen = true;
         }
 
         #endregion
