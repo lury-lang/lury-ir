@@ -39,8 +39,8 @@ namespace Lury.Engine.Intrinsic
         public const string FullName = "lury.core.Boolean";
         public const string TypeName = "Boolean";
         
-        public static readonly LuryObject True = new LuryObject(IntrinsicBoolean.TypeName, true, freeze: true);
-        public static readonly LuryObject False = new LuryObject(IntrinsicBoolean.TypeName, false, freeze: true);
+        public static readonly LuryObject True = new LuryObject(TypeName, true, freeze: true);
+        public static readonly LuryObject False = new LuryObject(TypeName, false, freeze: true);
         
         #endregion
 
