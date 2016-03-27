@@ -79,9 +79,9 @@ namespace Lury.Engine.Intrinsic
         public static LuryObject Mul(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName == IntrinsicInteger.FullName)
-                return GetObject((Complex)self.Value * (Complex)(double)(BigInteger)other.Value);
+                return GetObject((Complex)self.Value * (double)(BigInteger)other.Value);
             else if (other.LuryTypeName == IntrinsicReal.FullName)
-                return GetObject((Complex)self.Value * (Complex)(double)other.Value);
+                return GetObject((Complex)self.Value * (double)other.Value);
             else if (other.LuryTypeName == FullName)
                 return GetObject((Complex)self.Value * (Complex)other.Value);
             else
@@ -92,9 +92,9 @@ namespace Lury.Engine.Intrinsic
         public static LuryObject Div(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName == IntrinsicInteger.FullName)
-                return GetObject((Complex)self.Value / (Complex)(double)(BigInteger)other.Value);
+                return GetObject((Complex)self.Value / (double)(BigInteger)other.Value);
             else if (other.LuryTypeName == IntrinsicReal.FullName)
-                return GetObject((Complex)self.Value / (Complex)(double)other.Value);
+                return GetObject((Complex)self.Value / (double)other.Value);
             else if (other.LuryTypeName == FullName)
                 return GetObject((Complex)self.Value / (Complex)other.Value);
             else
@@ -105,9 +105,9 @@ namespace Lury.Engine.Intrinsic
         public static LuryObject Add(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName == IntrinsicInteger.FullName)
-                return GetObject((Complex)self.Value + (Complex)(double)(BigInteger)other.Value);
+                return GetObject((Complex)self.Value + (double)(BigInteger)other.Value);
             else if (other.LuryTypeName == IntrinsicReal.FullName)
-                return GetObject((Complex)self.Value + (Complex)(double)other.Value);
+                return GetObject((Complex)self.Value + (double)other.Value);
             else if (other.LuryTypeName == FullName)
                 return GetObject((Complex)self.Value + (Complex)other.Value);
             else
@@ -118,9 +118,9 @@ namespace Lury.Engine.Intrinsic
         public static LuryObject Sub(LuryObject self, LuryObject other)
         {
             if (other.LuryTypeName == IntrinsicInteger.FullName)
-                return GetObject((Complex)self.Value - (Complex)(double)(BigInteger)other.Value);
+                return GetObject((Complex)self.Value - (double)(BigInteger)other.Value);
             else if (other.LuryTypeName == IntrinsicReal.FullName)
-                return GetObject((Complex)self.Value - (Complex)(double)other.Value);
+                return GetObject((Complex)self.Value - (double)other.Value);
             else if (other.LuryTypeName == FullName)
                 return GetObject((Complex)self.Value - (Complex)other.Value);
             else
