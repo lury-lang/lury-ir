@@ -132,6 +132,9 @@ namespace Lury.Engine.Intrinsic
         [Intrinsic(OperatorIDiv)]
         public static LuryObject IDiv(LuryObject self, LuryObject other)
         {
+            if (other.LuryTypeName != FullName)
+                throw new ArgumentException();
+
             if (other.LuryTypeName == FullName)
                 return GetObject((BigInteger)self.Value / (BigInteger)other.Value);
             else if (other.LuryTypeName == IntrinsicReal.FullName)
