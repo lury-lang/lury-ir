@@ -42,17 +42,17 @@ namespace Lury.Compiling.IR
         /// <summary>
         /// nil を表す Parameter オブジェクトです。この変数は読み取り専用です。
         /// </summary>
-        public readonly static Parameter Nil = new Parameter(null, ParameterType.Nil);
+        public static readonly Parameter Nil = new Parameter(null, ParameterType.Nil);
 
         /// <summary>
         /// true を表す Parameter オブジェクトです。この変数は読み取り専用です。
         /// </summary>
-        public readonly static Parameter True = new Parameter(true, ParameterType.Boolean);
+        public static readonly Parameter True = new Parameter(true, ParameterType.Boolean);
 
         /// <summary>
         /// false を表す Parameter オブジェクトです。この変数は読み取り専用です。
         /// </summary>
-        public readonly static Parameter False = new Parameter(false, ParameterType.Boolean);
+        public static readonly Parameter False = new Parameter(false, ParameterType.Boolean);
 
         #endregion
 
