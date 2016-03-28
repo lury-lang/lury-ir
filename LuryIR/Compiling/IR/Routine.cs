@@ -155,15 +155,15 @@ namespace Lury.Compiling.IR
 
         private void DumpPrivate(StringBuilder sb, int indent, int positionWidth)
         {
-            const int indentWidth = 4;
+            const int IndentWidth = 4;
 
             this.DumpPosition(sb, positionWidth, -1);
-            sb.Append(' ', indentWidth * indent);
+            sb.Append(' ', IndentWidth * indent);
             sb.Append("::");
             sb.AppendLine(this.Name);
             indent++;
 
-            sb.Append(' ', positionWidth + indentWidth * indent);
+            sb.Append(' ', positionWidth + IndentWidth * indent);
             sb.AppendFormat("# alloc {0} register", this.RegisterCount);
             sb.AppendLine();
 
@@ -176,7 +176,7 @@ namespace Lury.Compiling.IR
             {
                 if (labels.ContainsKey(i))
                 {
-                    sb.Append(' ', positionWidth + indentWidth * (indent - 1));
+                    sb.Append(' ', positionWidth + IndentWidth * (indent - 1));
                     sb.Append(":");
                     sb.AppendLine(labels[i]);
                 }
@@ -185,7 +185,7 @@ namespace Lury.Compiling.IR
                 
                 var inst = this.instructions[i];
 
-                sb.Append(' ', indentWidth * indent);
+                sb.Append(' ', IndentWidth * indent);
                 if (inst.Destination != Instruction.NoAssign)
                 {
                     sb.Append('%');
