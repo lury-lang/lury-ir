@@ -36,7 +36,7 @@ namespace Lury.Engine
         #region -- Private Fields --
 
         private readonly ProgramContext parent;
-        private readonly Dictionary<string, LuryObject> Members = new Dictionary<string, LuryObject>(0);
+        private readonly Dictionary<string, LuryObject> members = new Dictionary<string, LuryObject>(0);
 
         #endregion
 
@@ -50,8 +50,8 @@ namespace Lury.Engine
 
                 while (context != null)
                 {
-                    if (context.Members.ContainsKey(member))
-                        return context.Members[member];
+                    if (context.members.ContainsKey(member))
+                        return context.members[member];
                     else
                         context = context.parent;
                 }
@@ -65,16 +65,16 @@ namespace Lury.Engine
 
                 while (context != null)
                 {
-                    if (context.Members.ContainsKey(member))
+                    if (context.members.ContainsKey(member))
                     {
-                        context.Members[member] = value;
+                        context.members[member] = value;
                         return;
                     }
                     else
                         context = context.parent;
                 }
 
-                this.Members.Add(member, value);
+                this.members.Add(member, value);
             }
         }
 
@@ -108,13 +108,13 @@ namespace Lury.Engine
 
             while (context != null)
             {
-                if (context.Members.ContainsKey(name))
+                if (context.members.ContainsKey(name))
                     return true;
                 else
                     context = context.parent;
             }
 
-            return this.Members.ContainsKey(name);
+            return this.members.ContainsKey(name);
         }
 
         //public void SetMemberNoRecursion(string name, LuryObject value)
