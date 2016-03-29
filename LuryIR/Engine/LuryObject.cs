@@ -42,7 +42,7 @@ namespace Lury.Engine
 
         #region -- Private Fields --
 
-        private readonly Dictionary<string, LuryObject> Members = new Dictionary<string, LuryObject>(0);
+        private readonly Dictionary<string, LuryObject> members = new Dictionary<string, LuryObject>(0);
         private readonly List<LuryObject> annotations;
         private readonly string luryTypeName;
         private readonly object value;
@@ -87,16 +87,16 @@ namespace Lury.Engine
             if (this.IsFrozen)
                 throw new InvalidOperationException();
 
-            if (this.Members.ContainsKey(name))
-                this.Members[name] = value;
+            if (this.members.ContainsKey(name))
+                this.members[name] = value;
             else
-                this.Members.Add(name, value);
+                this.members.Add(name, value);
         }
 
         public LuryObject GetMember(string name, ProgramContext context)
         {
-            if (this.Members.ContainsKey(name))
-                return this.Members[name];
+            if (this.members.ContainsKey(name))
+                return this.members[name];
 
             else if (this.LuryTypeName != null && context.HasMember(this.LuryTypeName))
             {
@@ -117,7 +117,7 @@ namespace Lury.Engine
 
         public bool HasMember(string member)
         {
-            return this.Members.ContainsKey(member);
+            return this.members.ContainsKey(member);
         }
 
         public void Freeze()
@@ -131,8 +131,8 @@ namespace Lury.Engine
 
         private LuryObject GetMemberNoRecursion(string name)
         {
-            if (this.Members.ContainsKey(name))
-                return this.Members[name];
+            if (this.members.ContainsKey(name))
+                return this.members[name];
             else
                 //throw new LuryException(LuryExceptionType.NameIsNotFound);
                 throw new InvalidOperationException();
