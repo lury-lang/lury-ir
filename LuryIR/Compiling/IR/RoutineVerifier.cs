@@ -36,9 +36,9 @@ namespace Lury.Compiling.IR
     {
         #region -- Public Properties --
 
-        public OutputLogger Logger { get; private set; }
+        public OutputLogger Logger { get; }
 
-        public Routine TargetRoutine { get; private set; }
+        public Routine TargetRoutine { get; }
 
         #endregion
 
