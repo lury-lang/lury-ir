@@ -44,7 +44,7 @@ namespace Lury.Compiling.IR
         /// <summary>
         /// 参照する変数の名前を表す文字列を取得します。
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; }
 
         #endregion
 
