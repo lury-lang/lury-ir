@@ -35,7 +35,6 @@ namespace Lury.Engine
     {
         #region -- Private Fields --
 
-        private readonly ProgramContext parent;
         private readonly Dictionary<string, LuryObject> members = new Dictionary<string, LuryObject>(0);
 
         #endregion
@@ -53,7 +52,7 @@ namespace Lury.Engine
                     if (context.members.ContainsKey(member))
                         return context.members[member];
                     else
-                        context = context.parent;
+                        context = context.Parent;
                 }
 
                 //throw new LuryException(LuryExceptionType.NameIsNotFound);
@@ -71,7 +70,7 @@ namespace Lury.Engine
                         return;
                     }
                     else
-                        context = context.parent;
+                        context = context.Parent;
                 }
 
                 this.members.Add(member, value);
@@ -82,7 +81,7 @@ namespace Lury.Engine
 
         #region -- Public Properties --
 
-        public ProgramContext Parent => this.parent;
+        public ProgramContext Parent { get; }
 
         #endregion
 
@@ -90,7 +89,7 @@ namespace Lury.Engine
 
         public ProgramContext(ProgramContext parent)
         {
-            this.parent = parent;
+            this.Parent = parent;
         }
 
         public ProgramContext()
@@ -111,7 +110,7 @@ namespace Lury.Engine
                 if (context.members.ContainsKey(name))
                     return true;
                 else
-                    context = context.parent;
+                    context = context.Parent;
             }
 
             return this.members.ContainsKey(name);
