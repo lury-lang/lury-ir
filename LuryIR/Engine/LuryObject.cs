@@ -82,15 +82,15 @@ namespace Lury.Engine
 
         #region -- Public Methods --
 
-        public void SetMember(string name, LuryObject value)
+        public void SetMember(string name, LuryObject obj)
         {
             if (this.IsFrozen)
                 throw new InvalidOperationException();
 
             if (this.members.ContainsKey(name))
-                this.members[name] = value;
+                this.members[name] = obj;
             else
-                this.members.Add(name, value);
+                this.members.Add(name, obj);
         }
 
         public LuryObject GetMember(string name, ProgramContext context)
