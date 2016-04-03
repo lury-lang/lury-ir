@@ -55,17 +55,17 @@ namespace Lury.Compiling.IR
 
         #region -- Public Properties --
 
-        public string Name { get; private set; }
+        public string Name { get; }
 
-        public string SourceName { get; private set; }
+        public string SourceName { get; }
 
-        public IList<Routine> Children => this.children;
+        public IList<Routine> Children { get; }
 
-        public IList<Instruction> Instructions => this.instructions;
+        public IList<Instruction> Instructions { get; }
 
-        public IDictionary<string, int> JumpLabels => this.jumpLabels;
+        public IDictionary<string, int> JumpLabels { get; }
 
-        public IDictionary<int, CodePosition> CodePosition => this.codePosition;
+        public IDictionary<int, CodePosition> CodePosition { get; }
 
         #endregion
 
