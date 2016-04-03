@@ -208,11 +208,7 @@ namespace Lury.Compiling.IR
             if (this.codePosition.ContainsKey(line))
             {
                 var pos = this.codePosition[line];
-                var str = string.Format(
-                    "L{0},{1}{2}",
-                    pos.Position.Line,
-                    pos.Position.Column,
-                    pos.Length > 0 ? "(" + pos.Length + ")" : "");
+                var str = $"L{pos.Position.Line},{pos.Position.Column}{(pos.Length > 0 ? "(" + pos.Length + ")" : "")}";
 
                 sb.Append(str);
                 sb.Append(' ', Math.Max(positionWidth - str.Length, 1));
