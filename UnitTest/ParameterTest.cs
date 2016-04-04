@@ -39,38 +39,38 @@ namespace UnitTest
         [TestMethod]
         public void GetIntegerTest()
         {
-            const long value = 42;
-            var param = Parameter.GetInteger(value);
+            const long Value = 42;
+            var param = Parameter.GetInteger(Value);
 
             Assert.IsNotNull(param);
             Assert.IsInstanceOfType(param.Value, typeof(BigInteger));
-            Assert.AreEqual(new BigInteger(value), param.Value);
+            Assert.AreEqual(new BigInteger(Value), param.Value);
             Assert.AreEqual(ParameterType.Integer, param.Type);
         }
 
         [TestMethod]
         public void GetRealTest()
         {
-            const double value = Math.PI;
-            var param = Parameter.GetReal(value);
+            const double Value = Math.PI;
+            var param = Parameter.GetReal(Value);
 
             Assert.IsNotNull(param);
             Assert.IsInstanceOfType(param.Value, typeof(double));
-            Assert.AreEqual(value, param.Value);
+            Assert.AreEqual(Value, param.Value);
             Assert.AreEqual(ParameterType.Real, param.Type);
         }
 
         [TestMethod]
         public void GetComplexTest()
         {
-            const double valueRe = 1.2345;
-            const double valueIm = 6.7890;
-            var param = Parameter.GetComplex(valueRe, valueIm);
+            const double ValueRe = 1.2345;
+            const double ValueIm = 6.7890;
+            var param = Parameter.GetComplex(ValueRe, ValueIm);
 
             Assert.IsNotNull(param);
             Assert.IsInstanceOfType(param.Value, typeof(Complex));
-            Assert.AreEqual(valueRe, ((Complex)param.Value).Real);
-            Assert.AreEqual(valueIm, ((Complex)param.Value).Imaginary);
+            Assert.AreEqual(ValueRe, ((Complex)param.Value).Real);
+            Assert.AreEqual(ValueIm, ((Complex)param.Value).Imaginary);
             Assert.AreEqual(ParameterType.Complex, param.Type);
         }
 
@@ -89,13 +89,13 @@ namespace UnitTest
         [TestMethod]
         public void GetStringTest()
         {
-            const string value = "Test String";
+            const string Value = "Test String";
 
-            var param = Parameter.GetString(value);
+            var param = Parameter.GetString(Value);
 
             Assert.IsNotNull(param);
             Assert.IsInstanceOfType(param.Value, typeof(string));
-            Assert.AreEqual(value, param.Value);
+            Assert.AreEqual(Value, param.Value);
             Assert.AreEqual(ParameterType.String, param.Type);
         }
 
@@ -109,39 +109,39 @@ namespace UnitTest
         [TestMethod]
         public void GetReferenceTest()
         {
-            const string name = "fizzbuzz";
+            const string Name = "fizzbuzz";
             
-            var nameParam = Parameter.GetReference(name);
+            var nameParam = Parameter.GetReference(Name);
             
             Assert.IsNotNull(nameParam);
             Assert.IsInstanceOfType(nameParam.Value, typeof(Reference));
-            Assert.AreEqual(name, ((Reference)nameParam.Value).Name);
+            Assert.AreEqual(Name, ((Reference)nameParam.Value).Name);
             Assert.AreEqual(ParameterType.Reference, nameParam.Type);
         }
 
         [TestMethod]
         public void GetRegisterTest()
         {
-            const int register = 3;
+            const int Register = 3;
 
-            var registerParam = Parameter.GetRegister(register);
+            var registerParam = Parameter.GetRegister(Register);
 
             Assert.IsNotNull(registerParam);
             Assert.IsInstanceOfType(registerParam.Value, typeof(int));
-            Assert.AreEqual(register, (int)registerParam.Value);
+            Assert.AreEqual(Register, (int)registerParam.Value);
             Assert.AreEqual(ParameterType.Register, registerParam.Type);
         }
 
         [TestMethod]
         public void GetLabelTest()
         {
-            const string value = "Test String";
+            const string Value = "Test String";
 
-            var param = Parameter.GetLabel(value);
+            var param = Parameter.GetLabel(Value);
 
             Assert.IsNotNull(param);
             Assert.IsInstanceOfType(param.Value, typeof(string));
-            Assert.AreEqual(value, param.Value);
+            Assert.AreEqual(Value, param.Value);
             Assert.AreEqual(ParameterType.Label, param.Type);
         }
 
