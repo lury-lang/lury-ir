@@ -44,10 +44,6 @@ namespace Lury.Engine
 
         private readonly Dictionary<string, LuryObject> members = new Dictionary<string, LuryObject>(0);
         private readonly List<LuryObject> annotations;
-        private readonly string luryTypeName;
-        private readonly object value;
-
-        private bool isFrozen;
 
         #endregion
 
